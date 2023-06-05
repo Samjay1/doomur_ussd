@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const mysqlStore = require('express-mysql-session')(session);
 require('dotenv/config');
-const ussd = require('./controllers/ussd')
-// const web_db = require('./models/web');
+// const ussd = require('./controllers/ussd');
+const wigal = require('./controllers/wigal');
 
 const app = express();
 
@@ -53,7 +53,8 @@ app.use(session({
 
 // app.use(cookieParser());
 
-app.use('/', ussd)
+// app.use('/', ussd)
+app.use('/', wigal)
 
 
 

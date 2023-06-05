@@ -57,6 +57,16 @@ router.post('/', (req,res)=>{
     if(body.msg_type == '0'){
         req.session.user = {count:1,session_id: body.session_id};
         console.log('COUNT ', req.session.user.count);
+        let my_body = {
+            network: body.network, // Network eg. MTN
+            sessionid: body.sessionid,// Session ID
+            mode: body.mode, // START | MORE | END
+            msisdn: body.msisdn, // Phone of the user
+            userdata: body.userdata, // Data from user or content provider
+            username: body.username, // App Username
+            trafficid: body.trafficid,
+            other: body.other // other information
+        }
         res.status(200).json(
             {
                 msg_type: body.msg_type,
