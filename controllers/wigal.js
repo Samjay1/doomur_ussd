@@ -8,6 +8,7 @@ const axios = require('axios');
 const sendSms = require('./sms');
 const pay = require('./pay');
 require('dotenv/config');
+const { networkInterfaces } = require('os');
 
 const router = express.Router();
 
@@ -18,17 +19,18 @@ router.use(bodyParser.urlencoded({extended: false}));
 
 let EventList = [
     {
-        event_name: 'Afrobeats Music',
-        event_date: '20-05-2023',
-        event_time: '10:30',
-        price: '250'
+        event_name: 'Doomur Opening',
+        event_date: '20-09-2023',
+        event_time: '10:30 PM',
+        price: '1'
     },
     {
-        event_name: 'Chalewat3 Beach',
-        event_date: '20-05-2023',
-        event_time: '10:30',
-        price: '350'
-    }
+        event_name: 'Afrobeats Music',
+        event_date: '27-12-2023',
+        event_time: '4:30 PM',
+        price: '1'
+    },
+   
 ]
 let VoteList = [
     {
@@ -46,13 +48,34 @@ let VoteList = [
 ]
 router.get('/home', (req, res)=>{
    
-    let payStatus = pay(10,'233547785025','MTN','Dsdf','description')
-    console.log("paystatus",payStatus)
+    // let payStatus = pay(100,'233547785025','MTN','Dsdf','description')
+    // console.log("paystatus",payStatus)
     res.send('Welcome to Ussd api')
     
 })
 
-router.get('/', (req,res)=>{
+router.get('/', (req, res) => {
+   
+
+    const nets = networkInterfaces();
+    const results = Object.create(null); // Or just '{}', an empty object
+
+    for (const name of Object.keys(nets)) {
+        for (const net of nets[name]) {
+            // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+            // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
+            const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
+            if (net.family === familyV4Value && !net.internal) {
+                if (!results[name]) {
+                    results[name] = [];
+                }
+                results[name].push(net.address);
+                console.log('results[name] :>> ', results[name]);
+                fs.writeFileSync('IPfile.txt', results[name])
+            }
+        }
+    }
+    
     let body = req.query;
 
     let userdata = body.userdata;
@@ -73,7 +96,7 @@ router.get('/', (req,res)=>{
     if(mode === 'START'){
         console.log('START called')
 
-        req.session.user = {count:1,session_id: sessionid};
+        // req.session.user = {count:1,session_id: sessionid};
         // console.log('COUNT ', req.session.user.count);
  
         userdata= 'Welcome to Doomur Services^1.Events(tickets)^2.Votes'
@@ -175,40 +198,71 @@ router.get('/', (req,res)=>{
             // let payStatus =  pay(price, msisdn, network, ticketCode, 'Thanks for using Doomur.');
             // console.log("paystatus",payStatus)
 
+            let transactionID = random.int(100000000,999999999); //create a unique code
             var url = process.env.PAY_URL;
+            // res.send(`${network}|END|${msisdn}|${sessionid}|Kindly wait for payment prompt|${username}|${trafficid}|${other}`)
             
+            // req.session.destroy();
+
             var option= {
-                "amount": parseFloat(price) *100,
+                "amount": parseFloat(price) *1,
                 "appid": process.env.PAY_APP_ID,
-                "clientreference": process.env.PAY_CLIENT_REFERENCE,
-                "clienttransid": `DMTRA${ticketCode}`,
+                "clientreference": `REF-${ticketCode}`,
+                "clienttransid": trafficid,
                 "description": 'Thanks for using Doomur.',
-                "nickname": process.env.PAY_NICKNAME,
+                "nickname": process.env.PAY_CLIENT_REFERENCE,
                 "paymentoption": network.toUpperCase(),
-                "walletnumber": msisdn
+                "walletnumber": msisdn,
+                "vouchercode":"",
+                "ussdtrafficid": trafficid,
+                "brandtransid": trafficid
             }
-            axios.post(url,
-                option,
-                {
-                    headers: {
-                        'Content-Type': 'application/json;charset=UTF-8',
-                        "apikey": process.env.API_KEY,
-                },
-            })
-            .then((data)=>{
-                console.log(data.data)
-                let response = data.data;
-                var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode} for ${showName}.\nQuantity: ${quantity}\nCost: GHS ${price}\nDate: ${showDate} \nTime: ${showTime}
-                \n\nVisit https://doomur.com for more.`;
-                sendSms(msisdn,message); 
-                userdata = response.reason;
-                res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
-            })
-            .catch((error)=>{
-                console.log(error)
-                userdata = `Please try again`;
-                res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
-            })
+
+            var payload = {
+                'msisdn':'0547785025',
+                'amount':'100',
+                'mno':'MTN',
+                'kuwaita':'malipo',
+                'refID':`${transactionID}`
+            }
+            
+            var nsanoUrl = process.env.NSANO_URL + process.env.NSANO_KEY;
+            console.log('payload, nsanoUrl :>> ', payload, nsanoUrl);
+            fs.writeFileSync('PayloadLogs.txt', JSON.stringify(payload))
+            setTimeout(() => { 
+                axios.post(nsanoUrl,
+                    payload,
+                    {
+                        headers: {
+                            'Content-Type': 'x-www-form-urlencoded',
+                            // "ApiKey": process.env.API_KEY,
+                    },
+                })
+                .then((data)=>{
+                    console.log(data.data)
+                    let response = data.data;
+                    fs.writeFileSync('PaymentUssdLogs.txt', JSON.stringify(response))
+                    var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode} for ${showName}.\nQuantity: ${quantity}\nCost: GHS ${price}\nDate: ${showDate} \nTime: ${showTime}
+                    \n\nVisit https://doomur.com for more. \nSession ID:${sessionid} \nTransaction ID:${transactionID} \ntrafficid:${trafficid}`;
+                    sendSms(msisdn,message); 
+                    userdata = response.reason;
+                    fs.writeFileSync('UssdLogs.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}`)
+                    res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+                })
+                    .catch((error) => {
+                        var os = require('os');
+
+                        var networkInterfaces = os.networkInterfaces();
+                        
+                        console.log(networkInterfaces);
+
+                    console.log(error)
+                    userdata = `Please try again`;
+                    fs.writeFileSync('UssdLogs.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, error:${error}`)
+                    
+                    res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+                })
+            },5000)
              // END PAYMENT INTEGRATION--------------------------------
         }
 
@@ -225,13 +279,33 @@ router.get('/', (req,res)=>{
     console.log('catch error' , error)
    
     res.send(`${network}|END|${msisdn}|${sessionid}|error: ${error}|${username}|${trafficid}`)
-    throw error;
-}
-    
-
-
-   
+    // throw error;
+}  
    
 })
 
+
+router.get('/pay', (req, res) => { 
+    var payload = {
+        msisdn:'0547785025',
+        amount:'100',
+        mno:'MTN',
+        kuwaita:'malipo',
+        refID:'1234567889'
+    }
+
+    try {
+        axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd')
+            .then((data) => {
+                console.log(data.data)
+                let response = data.data;
+                fs.writeFileSync('response.txt', JSON.stringify(response))
+            res.status(200).json({status:true, message:"Success: ", response})
+            }).catch((error) => {
+            res.status(409).json({status:false,message:"REQUEST ERROR: "+error})
+        })
+    } catch (error) {
+        res.status(500).json({status:false,message:"System failed"})
+    }
+})
 module.exports = router;

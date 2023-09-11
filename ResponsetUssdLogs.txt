@@ -1,0 +1,1 @@
+Network:mtn, phone no.:233547785025, Session:3736763393982378, Userdata:To Receive Payment Prompt Dial *800*0*0145#, Username:Doomur, TrafficID:ha6638263872879898, Others:4,event,0,1

@@ -1,0 +1,1 @@
+{"status":"OK","reason":"To Receive Payment Prompt Dial *800*0*5614#","transactionid":5954963,"clienttransid":"ha6638263872879898","clientreference":"REF-73975","statusdate":"2023-07-11 16:46:27.991","brandtransid":null}
