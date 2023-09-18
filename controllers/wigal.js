@@ -311,7 +311,7 @@ router.get('/pay', (req, res) => {
 
 router.get('/pay2', (req, res) => { 
     var payload = {
-        msisdn:'0504085727',
+        msisdn:'0205287971',
         amount:'10',
         mno:'VODAFONE',
         kuwaita:'malipo',
