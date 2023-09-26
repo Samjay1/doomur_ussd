@@ -241,7 +241,7 @@ router.get('/', (req, res) => {
    
     res.send(`${network}|END|${msisdn}|${sessionid}|error: ${error}|${username}|${trafficid}`)
     // throw error;
-}  
+}
    
 })
 
@@ -249,6 +249,30 @@ router.get('/', (req, res) => {
 router.get('/pay', (req, res) => { 
     var payload = {
         msisdn:'0547785025',
+        amount:'100',
+        mno:'MTN',
+        kuwaita:'malipo',
+        refID:'1234567889'
+    }
+
+    try {
+        axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd', payload)
+            .then((data) => {
+                console.log(data.data)
+                let response = data.data;
+                fs.writeFileSync('response.txt', JSON.stringify(response))
+            res.status(200).json({status:true, message:"Success: ", response})
+            }).catch((error) => {
+            res.status(409).json({status:false,message:"REQUEST ERROR: "+ error})
+        })
+    } catch (error) {
+        res.status(500).json({status:false,message:"System failed"})
+    }
+})
+
+router.get('/pay3', (req, res) => { 
+    var payload = {
+        msisdn:'0504085727',
         amount:'100',
         mno:'MTN',
         kuwaita:'malipo',
