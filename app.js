@@ -9,6 +9,7 @@ const mysqlStore = require('express-mysql-session')(session);
 require('dotenv/config');
 // const ussd = require('./controllers/ussd');
 const wigal = require('./controllers/wigal');
+const nsano = require('./controllers/nsano');
 
 const app = express();
 
@@ -55,18 +56,9 @@ const TWO_MINUTES = 1000 * 60 * 2
 
 // app.use(cookieParser());
 
-// app.use('/', ussd)
+app.use('/payment/', nsano)
 app.use('/ussd/', wigal)
 //Callback Url Endpoint
-app.post("/payment", function (req, res) {
-    var data = req.body;
-
-    fs.writeFile('ussd_log.txt', JSON.stringify(data), err => { 
-        if (err) throw error;
-    })
-    res.json({...data});
-
-});
 
 app.get("/home", (req, res) => {
     res.status(200).json({status:true, message:"Welcome to doomur Ussd"})

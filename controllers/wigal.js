@@ -7,8 +7,8 @@ const fs = require('fs')
 const axios = require('axios');
 const sendSms = require('./sms');
 const pay = require('./pay');
+const nsano = require('./nsano');
 require('dotenv/config');
-const { networkInterfaces } = require('os');
 
 const router = express.Router();
 
@@ -55,26 +55,6 @@ router.get('/home', (req, res)=>{
 })
 
 router.get('/', (req, res) => {
-   
-
-    const nets = networkInterfaces();
-    const results = Object.create(null); // Or just '{}', an empty object
-
-    for (const name of Object.keys(nets)) {
-        for (const net of nets[name]) {
-            // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
-            // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
-            const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
-            if (net.family === familyV4Value && !net.internal) {
-                if (!results[name]) {
-                    results[name] = [];
-                }
-                results[name].push(net.address);
-                console.log('results[name] :>> ', results[name]);
-                fs.writeFileSync('IPfile.txt', results[name])
-            }
-        }
-    }
     
     let body = req.query;
 
@@ -103,7 +83,7 @@ router.get('/', (req, res) => {
         res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${1}`)
  
     }else if(mode == 'MORE'){ // msg_type = 1 (continue session)
-        console.log('MORE called')
+        // console.log('MORE called')
         let currentPosition = other.split(',')
 
         console.log('currentPosition :>> ', currentPosition);
@@ -193,16 +173,11 @@ router.get('/', (req, res) => {
             let showDate = event_selected.event_date;
             let showTime = event_selected.event_time; 
 
-
-            // PAYMENT INTEGRATION--------------------------------
-            // let payStatus =  pay(price, msisdn, network, ticketCode, 'Thanks for using Doomur.');
-            // console.log("paystatus",payStatus)
-
+ 
             let transactionID = random.int(100000000,999999999); //create a unique code
             var url = process.env.PAY_URL;
             // res.send(`${network}|END|${msisdn}|${sessionid}|Kindly wait for payment prompt|${username}|${trafficid}|${other}`)
             
-            // req.session.destroy();
 
             var option= {
                 "amount": parseFloat(price) *1,
@@ -218,52 +193,38 @@ router.get('/', (req, res) => {
                 "brandtransid": trafficid
             }
 
-            var payload = {
-                'msisdn':'0547785025',
-                'amount':'100',
-                'mno':'MTN',
-                'kuwaita':'malipo',
-                'refID':`${transactionID}`
-            }
             
-            var nsanoUrl = process.env.NSANO_URL + process.env.NSANO_KEY;
-            console.log('payload, nsanoUrl :>> ', payload, nsanoUrl);
-            fs.writeFileSync('PayloadLogs.txt', JSON.stringify(payload))
-            setTimeout(() => { 
-                axios.post(nsanoUrl,
-                    payload,
-                    {
-                        headers: {
-                            'Content-Type': 'x-www-form-urlencoded',
-                            // "ApiKey": process.env.API_KEY,
-                    },
-                })
-                .then((data)=>{
-                    console.log(data.data)
-                    let response = data.data;
-                    fs.writeFileSync('PaymentUssdLogs.txt', JSON.stringify(response))
-                    var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode} for ${showName}.\nQuantity: ${quantity}\nCost: GHS ${price}\nDate: ${showDate} \nTime: ${showTime}
-                    \n\nVisit https://doomur.com for more. \nSession ID:${sessionid} \nTransaction ID:${transactionID} \ntrafficid:${trafficid}`;
-                    sendSms(msisdn,message); 
-                    userdata = response.reason;
-                    fs.writeFileSync('UssdLogs.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}`)
-                    res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
-                })
-                    .catch((error) => {
-                        var os = require('os');
+            var payload = {
+                msisdn,
+                amount: parseFloat(price) *1,
+                mno: network.toUpperCase(),
+                kuwaita:'malipo',
+                refID:`${transactionID}`
+            }
+             
+            userdata = 'Please wait for your payment prompt';
+            res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+            fs.writeFileSync('finalUssdResponse.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}`)
+            
+            axios.post('http://3.215.156.108:3000/payment/nsano', payload)
+                .then((response) => {
+                    console.log('payment/nsano response :>> ', response.data.status);
+                    let status = response.data.status
+                    if (status){
+                        var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode} for ${showName}.\nQuantity: ${quantity}\nCost: GHS ${price}\nDate: ${showDate} \nTime: ${showTime}
+                        \n\nVisit https://doomur.com for more.`;
+                        sendSms(msisdn,message);  
+                    } else {
+                        // console.log('failed to pay')
+                        var message= `Failed to pay.`;
+                        sendSms(msisdn,message);  
+                    }
+                }).catch((error) => {
+                    return;
+            })
+           
 
-                        var networkInterfaces = os.networkInterfaces();
-                        
-                        console.log(networkInterfaces);
-
-                    console.log(error)
-                    userdata = `Please try again`;
-                    fs.writeFileSync('UssdLogs.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, error:${error}`)
-                    
-                    res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
-                })
-            },5000)
-             // END PAYMENT INTEGRATION--------------------------------
+            // END PAYMENT INTEGRATION--------------------------------
         }
 
     }else{  // msg_type = 2 (end session)

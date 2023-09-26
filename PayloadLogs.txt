@@ -1,1 +1,1 @@
-{"msisdn":"0547785025","amount":"100","mno":"MTN","kuwaita":"malipo","refID":"493305316"}
+{"msisdn":"0547785025","amount":2,"mno":"MTN","kuwaita":"malipo","refID":"134549191"}
