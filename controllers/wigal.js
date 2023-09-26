@@ -30,6 +30,12 @@ let EventList = [
         event_time: '4:30 PM',
         price: '1'
     },
+    {
+        event_name: 'Awinteck Awards',
+        event_date: '06-12-2023',
+        event_time: '9:30 AM',
+        price: '2'
+    },
    
 ]
 let VoteList = [
