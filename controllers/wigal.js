@@ -196,7 +196,7 @@ router.get('/', (req, res) => {
             
             var payload = {
                 msisdn,
-                amount: parseFloat(price) *1,
+                amount: parseFloat(price) *10,
                 mno: network.toUpperCase(),
                 kuwaita:'malipo',
                 refID:`${transactionID}`

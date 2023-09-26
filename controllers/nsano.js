@@ -26,7 +26,7 @@ router.post('/nsano', (req, res) => {
         try {
             axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd', payload)
                 .then((data) => {
-                    console.log(data.data)
+                    console.log("NSANO API RESPONSE: ",data.data)
                     let response = data.data;
                     fs.writeFileSync('NsanoSuccess.txt', JSON.stringify(response))
                     
