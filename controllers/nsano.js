@@ -20,18 +20,18 @@ router.post('/nsano', (req, res) => {
         refID
     }
 
-    var payload1 = {
-        msisdn:'0504085727',
-        amount:'100',
-        mno:'MTN',
-        kuwaita:'malipo',
-        refID:'1234567889'
-    }
-    console.log('nsano payload :>> ', payload1);
+    // var payload1 = {
+    //     msisdn:'0504085727',
+    //     amount:'100',
+    //     mno:'MTN',
+    //     kuwaita:'malipo',
+    //     refID:'1234567889'
+    // }
+    console.log('nsano payload :>> ', payload);
 
-    fs.writeFileSync('PayloadLogs.txt', JSON.stringify(payload1))
+    fs.writeFileSync('PayloadLogs.txt', JSON.stringify(payload))
         try {
-            axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd', payload1)
+            axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd', payload)
                 .then((data) => {
                     console.log("NSANO API RESPONSE: ",data.data)
                     let response = data.data;
