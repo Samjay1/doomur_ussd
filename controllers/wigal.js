@@ -282,7 +282,7 @@ router.get('/pay3', (req, res) => {
     try {
         axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd', payload)
             .then((data) => {
-                console.log(data.data)
+                console.log("PAY3 called: ",data.data)
                 let response = data.data;
                 fs.writeFileSync('response.txt', JSON.stringify(response))
             res.status(200).json({status:true, message:"Success: ", response})
