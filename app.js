@@ -5,7 +5,7 @@ const cors = require('cors');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const mysqlStore = require('express-mysql-session')(session);
+// const mysqlStore = require('express-mysql-session')(session);
 require('dotenv/config');
 // const ussd = require('./controllers/ussd');
 const wigal = require('./controllers/wigal');
@@ -57,7 +57,7 @@ const TWO_MINUTES = 1000 * 60 * 2
 // app.use(cookieParser());
 
 app.use('/payment/', nsano)
-app.use('/ussd/', wigal)
+app.use('/', wigal)
 //Callback Url Endpoint
 
 app.get("/home", (req, res) => {

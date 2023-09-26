@@ -52,13 +52,7 @@ let VoteList = [
         price: '350'
     }
 ]
-router.get('/home', (req, res)=>{
-   
-    // let payStatus = pay(100,'233547785025','MTN','Dsdf','description')
-    // console.log("paystatus",payStatus)
-    res.send('Welcome to Ussd api')
-    
-})
+
 
 router.get('/', (req, res) => {
     
@@ -227,9 +221,7 @@ router.get('/', (req, res) => {
                     }
                 }).catch((error) => {
                     return;
-            })
-           
-
+            }) 
             // END PAYMENT INTEGRATION--------------------------------
         }
 
@@ -323,4 +315,5 @@ router.get('/pay2', (req, res) => {
         res.status(500).json({status:false,message:"System failed"})
     }
 })
+
 module.exports = router;
