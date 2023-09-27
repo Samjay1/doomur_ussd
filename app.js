@@ -5,6 +5,8 @@ const cors = require('cors');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const fs = require('fs')
+const axios = require('axios');
 // const mysqlStore = require('express-mysql-session')(session);
 require('dotenv/config');
 // const ussd = require('./controllers/ussd');
@@ -62,6 +64,28 @@ app.use('/', wigal)
 
 app.get("/home", (req, res) => {
     res.status(200).json({status:true, message:"Welcome to doomur Ussd"})
+})
+
+app.get('/test', (req, res) => {
+    axios.post('http://3.215.156.108:3000/payment/test', payload)
+                .then((response) => {
+                    console.log('test/response :>> ', response.data.status);
+                    let status = response.data.status
+                    if (status) {
+                        res.send(response.data.message)
+                        // var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode} for ${showName}.\nQuantity: ${quantity}\nCost: GHS ${price}\nDate: ${showDate} \nTime: ${showTime}
+                        // \n\nVisit https://doomur.com for more.`;
+                        // sendSms(msisdn,message);  
+                    } else {
+                        // console.log('failed to pay')
+                        // var message= `Failed to pay.`;
+                        // sendSms(msisdn,message);  
+                    }
+                }).catch((error) => {
+                    console.log('error :>> ', error);
+                    return res.send(error)
+                 
+            })
 })
 
 

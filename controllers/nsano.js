@@ -5,7 +5,10 @@ const axios = require('axios');
 
 router.get('/test', (req, res) => {
     console.log('Main AWS Server works :>> ');
-    res.send("Server works!");
+    res.status(200).json({
+        status: true,
+        message:"Main aws server works"
+    })
 })
 
 
