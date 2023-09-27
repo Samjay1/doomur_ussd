@@ -4,6 +4,7 @@ const fs = require('fs');
 const axios = require('axios');
 
 router.get('/test', (req, res) => {
+    console.log('Main AWS Server works :>> ');
     res.send("Server works!");
 })
 
