@@ -1,1 +1,1 @@
-Network:MTN, phone no.:0246586854, Session:awsTrial, Userdata:Please wait for your payment prompt, Username:Doomur, TrafficID:aws324567543, Others:4,event,0,2
+Network:MTN, phone no.:0547785025, Session:awsTrial, Userdata:Please wait for your payment prompt, Username:Doomur, TrafficID:aws324567543, Others:4,event,0,2

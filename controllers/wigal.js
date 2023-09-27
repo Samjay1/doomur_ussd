@@ -19,6 +19,12 @@ router.use(bodyParser.urlencoded({extended: false}));
 
 let EventList = [
     {
+        event_name: 'Music Awards',
+        event_date: '03-10-2023',
+        event_time: '06:30 PM',
+        price: '2'
+    },
+    {
         event_name: 'Doomur Opening',
         event_date: '20-09-2023',
         event_time: '10:30 PM',
@@ -202,9 +208,6 @@ router.get('/', (req, res) => {
                 refID:`${transactionID}`
             }
              
-            userdata = 'Please wait for your payment prompt';
-            res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
-            fs.writeFileSync('finalUssdResponse.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}`)
             
             axios.post('http://3.215.156.108:3000/payment/nsano', payload)
                 .then((response) => {
@@ -220,9 +223,15 @@ router.get('/', (req, res) => {
                         sendSms(msisdn,message);  
                     }
                 }).catch((error) => {
+                    console.log('error :>> ', error);
                     return;
             }) 
             // END PAYMENT INTEGRATION--------------------------------
+
+            userdata = 'Please wait for your payment prompt';
+            res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+            fs.writeFileSync('finalUssdResponse.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}`)
+            
         }
 
     }else{  // msg_type = 2 (end session)
