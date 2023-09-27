@@ -66,7 +66,7 @@ app.get("/home", (req, res) => {
 })
 
 app.get('/test', (req, res) => {
-    axios.post('http://3.215.156.108:3000/payment/test', payload)
+    axios.get('http://3.215.156.108:3000/payment/test')
                 .then((response) => {
                     console.log('test/response :>> ', response.data.status);
                     let status = response.data.status
