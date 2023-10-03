@@ -13,10 +13,10 @@ var date = oldDate.toISOString().split('T')[0];
 var time  = new Date().toLocaleTimeString();  
 
 router.get('/test', (req, res) => {
-    console.log('Nsano Route :>> ');
+    console.log('final Nsano Route :>> ');
     res.status(200).json({
         status: true,
-        message:"Nsano Route"
+        message:"final Nsano Route"
     })
 })
 

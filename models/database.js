@@ -48,7 +48,7 @@ const mysql = require('mysql');
     // })
 
     connection.getConnection(function(error, pool){
-        if(error) return console.log('error : ', error.message);
+        if(error) return console.log('error : ', error);
         console.log('Connected to the Mysql database')
         pool.release();
     })
