@@ -28,24 +28,24 @@ const mysql = require('mysql');
     
     
 
-//  const connection = mysql.createPool({
-//         connectionLimit : 400, 
-//         host: 'localhost',
-//         user: 'awinxcxu_doomur',
-//         password: 'N0bX?^$UZBsj',
-//         database: 'awinxcxu_doomur',
-//         charset: 'utf8mb4'
-//     });
-
-
-
-    let connection = mysql.createPool({
-        connectionLimit : 2, 
+ const connection = mysql.createPool({
+        connectionLimit : 4, 
         host: 'localhost',
-        user: 'root',
-        database: 'gigdb',
+        user: 'awinxcxu_doomur',
+        password: 'N0bX?^$UZBsj',
+        database: 'awinxcxu_doomur',
         charset: 'utf8mb4'
-    })
+    });
+
+
+
+    // let connection = mysql.createPool({
+    //     connectionLimit : 2, 
+    //     host: 'localhost',
+    //     user: 'root',
+    //     database: 'gigdb',
+    //     charset: 'utf8mb4'
+    // })
 
     connection.getConnection(function(error, pool){
         if(error) return console.log('error : ', error.message);

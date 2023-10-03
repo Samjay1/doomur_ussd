@@ -9,6 +9,8 @@ const sendSms = require('./sms');
 const pay = require('./pay');
 const nsano = require('./nsano');
 require('dotenv/config');
+const Showdb = require('../models/showdb')
+let DB = new Showdb();
 
 const router = express.Router();
 
@@ -17,32 +19,19 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended: false}));
  
 
+const oldDate = new Date()
+var date = oldDate.toISOString().split('T')[0];
+var time = new Date().toLocaleTimeString();  
+
 let EventList = [
     {
-        event_name: 'Music Awards',
-        event_date: '03-10-2023',
-        event_time: '06:30 PM',
-        price: '2'
+        show_id: '55',
+        event_name: "Play 'n' Groove",
+        event_date: '7th Oct',
+        event_time: '5:00 PM',
+        price: '20'
     },
-    {
-        event_name: 'Doomur Opening',
-        event_date: '20-09-2023',
-        event_time: '10:30 PM',
-        price: '1'
-    },
-    {
-        event_name: 'Afrobeats Music',
-        event_date: '27-12-2023',
-        event_time: '4:30 PM',
-        price: '1'
-    },
-    {
-        event_name: 'Awinteck Awards',
-        event_date: '06-12-2023',
-        event_time: '9:30 AM',
-        price: '2'
-    },
-   
+
 ]
 let VoteList = [
     {
@@ -85,7 +74,7 @@ router.get('/', (req, res) => {
         // req.session.user = {count:1,session_id: sessionid};
         // console.log('COUNT ', req.session.user.count);
  
-        userdata= 'Welcome to Doomur Services^1.Events(tickets)^2.Votes'
+        userdata= 'Welcome to Doomur Services^1.Events(tickets)'
         res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${1}`)
  
     }else if(mode == 'MORE'){ // msg_type = 1 (continue session)
@@ -172,6 +161,8 @@ router.get('/', (req, res) => {
             let quantity = currentPosition[3] 
             let event_selected = EventList.filter((value,index)=>index===parseInt(event_index))[0]; 
             let price = parseInt(quantity) * parseFloat(event_selected.price); 
+            let itemPrice = event_selected.price
+            let eventId  = event_selected.show_id
             
             // SENDING SMS
             let ticketCode = random.int(10000,100000); //create a unique code
@@ -205,7 +196,7 @@ router.get('/', (req, res) => {
                 amount: (parseFloat(price) *1).toString(),
                 mno: network.toUpperCase(),
                 kuwaita:'malipo',
-                refID:`${transactionID}`
+                refID:`${ticketCode}`
             }
              
             
@@ -213,10 +204,17 @@ router.get('/', (req, res) => {
                 .then((response) => {
                     console.log('payment/nsano response :>> ', response.data.status);
                     let status = response.data.status
-                    if (status){
-                        var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode} for ${showName}.\nQuantity: ${quantity}\nCost: GHS ${price}\nDate: ${showDate} \nTime: ${showTime}
-                        \n\nVisit https://doomur.com for more.`;
-                        sendSms(msisdn,message);  
+                    if (status) {
+                        // TODO: send bookings to db
+                        DB.book_show(eventId, ticketCode, showName, 'Regular', itemPrice, quantity, showDate, showTime, msisdn, 3, (response) => { 
+                           console.log('show booked :>> ', eventId, ticketCode, showName, 'Regular', itemPrice, quantity, showDate, showTime, msisdn, 3);
+                            return;
+                        })
+
+
+                        // var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode} for ${showName}.\nQuantity: ${quantity}\nCost: GHS ${price}\nDate: ${showDate} \nTime: ${showTime}
+                        // \n\nVisit https://doomur.com for more.`;
+                        // sendSms(msisdn,message);  
                     } else {
                         // console.log('failed to pay')
                         var message= `Failed to pay.`;
@@ -230,7 +228,7 @@ router.get('/', (req, res) => {
 
             userdata = 'Please wait for your payment prompt';
             res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
-            fs.writeFileSync('finalUssdResponse.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}`)
+            fs.appendFileSync('finalUssdResponse.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}, {${date},${time}}`)
             
         }
 
@@ -267,7 +265,7 @@ router.get('/pay', (req, res) => {
             .then((data) => {
                 console.log(data.data)
                 let response = data.data;
-                fs.writeFileSync('response.txt', JSON.stringify(response))
+                fs.appendFileSync('response.txt', JSON.stringify(response,date,time))
             res.status(200).json({status:true, message:"Success: ", response})
             }).catch((error) => {
             res.status(409).json({status:false,message:"REQUEST ERROR: "+ error})
@@ -291,7 +289,7 @@ router.get('/pay3', (req, res) => {
             .then((data) => {
                 console.log("PAY3 called: ",data.data)
                 let response = data.data;
-                fs.writeFileSync('response.txt', JSON.stringify(response))
+                fs.appendFileSync('response.txt', JSON.stringify(response, date,time))
             res.status(200).json({status:true, message:"Success: ", response})
             }).catch((error) => {
             res.status(409).json({status:false,message:"REQUEST ERROR: "+ error})
@@ -315,7 +313,7 @@ router.get('/pay2', (req, res) => {
             .then((data) => {
                 console.log(data.data)
                 let response = data.data;
-                fs.writeFileSync('response.txt', JSON.stringify(response))
+                fs.appendFileSync('response.txt', JSON.stringify(response,date,time))
             res.status(200).json({status:true, message:"Success: ", response})
             }).catch((error) => {
             res.status(409).json({status:false,message:"REQUEST ERROR: "+ error})
