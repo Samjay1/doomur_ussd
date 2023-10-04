@@ -143,7 +143,7 @@ router.get('/', (req, res) => {
             
             other = `4,event,${event_index},${quantity}`;
 
-            userdata= `Paying an amount of GHS ${price} for ${quantity} tickets to ${event_selected.event_name}^Enter 1 to proceed`;
+            userdata= `Paying an amount of GHS ${price} for ${quantity} ticket(s) to ${event_selected.event_name}^Enter 1 to proceed`;
 
           
            
