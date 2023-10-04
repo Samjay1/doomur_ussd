@@ -25,7 +25,7 @@ let EventList = [
         event_name: "Play 'n' Groove",
         event_date: '7th Oct',
         event_time: '5:00 PM',
-        price: '1'
+        price: '20'
     },
 
 ]
