@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
     let body = req.body;
     fs.appendFileSync('NsanoCallback.txt', JSON.stringify(body, date,time))
     let code = body.code;
-    let ticketCode = body.refID;
+    let ticketCode = body.author_ref;
     let transactionID = body.transactionID
     let amount = body.amount;
     let phone = body.userID;
@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
             fs.appendFileSync('BookingSuccessError.txt', JSON.stringify(response, body, date, time))
             if (response.status) { 
 
-                var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode}.\nAmount paid: ${amount}\nTransactionId: ${transactionID}
+                var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode}.\nAmount paid: GHS ${amount}\nTransactionId: ${transactionID}
                 \n\nVisit https://doomur.com for more.`;
                 sendSms(phone,message);  
             }

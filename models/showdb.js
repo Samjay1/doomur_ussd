@@ -21,7 +21,7 @@ class show_db {
         try {
             db.query(query, value, (err, response) => {
               if (err) {
-                  throw err;
+                  // throw err;
                 return callback({ status: false, message: "error here: "+ err });
               }
               if (response.length === 0) {
@@ -64,13 +64,13 @@ add_payment(unique_id,transaction_id,amount,other,phone,callback){
               console.log('payment completed status successful');
               return callback({
                 status: true,
-                message: "Payment successful",
+                message: "Payment successful(complete)",
                 other: res.message
               })
             }else{
               return callback({
                 status: true,
-                message: "Payment successful",
+                message: "Payment successful(status not updated - payment and book_show db)",
                 other: response.message
               })
             }

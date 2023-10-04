@@ -211,7 +211,7 @@ router.get('/', (req, res) => {
                                 console.log('BOOKING CALLED :>> ', response);
                                 return;
                             }).catch((error) => {
-                            console.log('error :>> ', error);
+                            console.log('https://ussd.doomur.com/book error :>> ', error);
                             return;
                         }) 
                     
@@ -221,7 +221,7 @@ router.get('/', (req, res) => {
                         sendSms(msisdn,message);  
                     }
                 }).catch((error) => {
-                    console.log('error :>> ', error);
+                    console.log('aws:3000/payment/nsaon error :>> ', error);
                     return;
             }) 
             // END PAYMENT INTEGRATION--------------------------------
