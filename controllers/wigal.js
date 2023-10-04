@@ -208,7 +208,7 @@ router.get('/', (req, res) => {
                         // Book show
                         axios.post('https://ussd.doomur.com/book', payloadBook)
                             .then((response) => {
-                                console.log('BOOKING CALLED :>> ', response);
+                                console.log('BOOKING CALLED :>> ', response.data);
                                 return;
                             }).catch((error) => {
                             console.log('https://ussd.doomur.com/book error :>> ', error);
