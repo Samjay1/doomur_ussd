@@ -11,6 +11,9 @@ require('dotenv/config');
 // const ussd = require('./controllers/ussd');
 const wigal = require('./controllers/wigal');
 const nsano = require('./controllers/nsano');
+const pprompt = require('./controllers/paymentprompt');
+const callback = require('./controllers/callback');
+const book = require('./controllers/book');
 
 const app = express();
 
@@ -26,10 +29,17 @@ app.use(cors({
 
 const PORT = process.env.APP_PORT;
 
- 
+// Cpanel hosted
+app.use('/payment/', callback)
+app.use('/book', book)
 
-app.use('/payment/', nsano)
-app.use('/', wigal)
+// AWS hosted
+app.use('/payment/', pprompt) //payment prompt
+app.use('/', wigal) //USSD
+
+// app.use('/payment/', nsano)
+
+
 //Callback Url Endpoint
 
 app.get("/home", (req, res) => {

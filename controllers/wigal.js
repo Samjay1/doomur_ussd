@@ -8,9 +8,7 @@ const axios = require('axios');
 const sendSms = require('./sms');
 const pay = require('./pay');
 const nsano = require('./nsano');
-require('dotenv/config');
-const Showdb = require('../models/showdb')
-let DB = new Showdb();
+require('dotenv/config'); 
 
 const router = express.Router();
 
@@ -205,16 +203,19 @@ router.get('/', (req, res) => {
                     console.log('payment/nsano response :>> ', response.data.status);
                     let status = response.data.status
                     if (status) {
-                        // TODO: send bookings to db
-                        DB.book_show(eventId, ticketCode, showName, 'Regular', itemPrice, quantity, showDate, showTime, msisdn, 3, (response) => { 
-                           console.log('show booked :>> ', eventId, ticketCode, showName, 'Regular', itemPrice, quantity, showDate, showTime, msisdn, 3);
+                        // send bookings to db
+                        let payloadBook = {
+                            eventId, ticketCode, showName,  itemPrice, quantity, showDate, showTime, msisdn,
+                        }         
+                        // Book show
+                        axios.post('https://ussd.doomur.com/book', payloadBook)
+                            .then((response) => {
+                                return;
+                            }).catch((error) => {
+                            console.log('error :>> ', error);
                             return;
-                        })
-
-
-                        // var message= `Thank you for choosing Doomur! \nYour Ticket Code is ${ticketCode} for ${showName}.\nQuantity: ${quantity}\nCost: GHS ${price}\nDate: ${showDate} \nTime: ${showTime}
-                        // \n\nVisit https://doomur.com for more.`;
-                        // sendSms(msisdn,message);  
+                        }) 
+                    
                     } else {
                         // console.log('failed to pay')
                         var message= `Failed to pay.`;
@@ -251,76 +252,5 @@ router.get('/', (req, res) => {
 })
 
 
-router.get('/pay', (req, res) => { 
-    var payload = {
-        msisdn:'0547785025',
-        amount:'100',
-        mno:'MTN',
-        kuwaita:'malipo',
-        refID:'1234567889'
-    }
-
-    try {
-        axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd', payload)
-            .then((data) => {
-                console.log(data.data)
-                let response = data.data;
-                fs.appendFileSync('response.txt', JSON.stringify(response,date,time))
-            res.status(200).json({status:true, message:"Success: ", response})
-            }).catch((error) => {
-            res.status(409).json({status:false,message:"REQUEST ERROR: "+ error})
-        })
-    } catch (error) {
-        res.status(500).json({status:false,message:"System failed"})
-    }
-})
-
-router.get('/pay3', (req, res) => { 
-    var payload = {
-        msisdn:'0504085727',
-        amount:'100',
-        mno:'MTN',
-        kuwaita:'malipo',
-        refID:'1234567889'
-    }
-
-    try {
-        axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd', payload)
-            .then((data) => {
-                console.log("PAY3 called: ",data.data)
-                let response = data.data;
-                fs.appendFileSync('response.txt', JSON.stringify(response, date,time))
-            res.status(200).json({status:true, message:"Success: ", response})
-            }).catch((error) => {
-            res.status(409).json({status:false,message:"REQUEST ERROR: "+ error})
-        })
-    } catch (error) {
-        res.status(500).json({status:false,message:"System failed"})
-    }
-})
-
-router.get('/pay2', (req, res) => { 
-    var payload = {
-        msisdn:'0205287971',
-        amount:'10',
-        mno:'VODAFONE',
-        kuwaita:'malipo',
-        refID:'1234567889'
-    }
-
-    try {
-        axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd', payload)
-            .then((data) => {
-                console.log(data.data)
-                let response = data.data;
-                fs.appendFileSync('response.txt', JSON.stringify(response,date,time))
-            res.status(200).json({status:true, message:"Success: ", response})
-            }).catch((error) => {
-            res.status(409).json({status:false,message:"REQUEST ERROR: "+ error})
-        })
-    } catch (error) {
-        res.status(500).json({status:false,message:"System failed"})
-    }
-})
 
 module.exports = router;
