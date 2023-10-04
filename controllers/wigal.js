@@ -6,8 +6,6 @@ const random = require('random');
 const fs = require('fs')
 const axios = require('axios');
 const sendSms = require('./sms');
-const pay = require('./pay');
-const nsano = require('./nsano');
 require('dotenv/config'); 
 
 const router = express.Router();
@@ -140,7 +138,7 @@ router.get('/', (req, res) => {
             let quantity = userdata;
             console.log('event_index :>> ',event_index);
             let event_selected = EventList.filter((value,index)=>index===parseInt(event_index))[0];
-            console.log('event_selected',event_selected, EventList)
+            console.log('event_selected',event_selected)
             let price = parseInt(quantity) * parseFloat(event_selected.price);
             
             other = `4,event,${event_index},${quantity}`;
@@ -200,7 +198,7 @@ router.get('/', (req, res) => {
             
             axios.post('http://3.215.156.108:3000/payment/nsano', payload)
                 .then((response) => {
-                    console.log('payment/nsano response :>> ', response.data.status);
+                    console.log('payment/nsano CALLED :>> ', response.data.status);
                     let status = response.data.status
                     if (status) {
                         // send bookings to db
@@ -210,6 +208,7 @@ router.get('/', (req, res) => {
                         // Book show
                         axios.post('https://ussd.doomur.com/book', payloadBook)
                             .then((response) => {
+                                console.log('BOOKING CALLED :>> ', response);
                                 return;
                             }).catch((error) => {
                             console.log('error :>> ', error);
@@ -236,14 +235,14 @@ router.get('/', (req, res) => {
     }else{  // msg_type = 2 (end session)
         // req.session.user.count = 1;
         other = 1;
-       console.log('END called')
+       console.log('END CALLED')
         res.send(`${network}|END|${msisdn}|${sessionid}|end: ${userdata}|${username}|${trafficid}`)
     }
 
 } catch (error) {
     // req.session.user.count = 1;
     other = 1;
-    console.log('catch error' , error)
+    console.log('catch error CALLED' , error)
    
     res.send(`${network}|END|${msisdn}|${sessionid}|error: ${error}|${username}|${trafficid}`)
     // throw error;

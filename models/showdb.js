@@ -16,12 +16,12 @@ class show_db {
    
     //BOOK GIG
     book_show(show_id,unique_id,title,ticket_type,ticket_price,ticket_quantity,event_date,event_time,email,status,callback){
-        let query = 'INSERT INTO booked_show (user_id,show_id,unique_id,title,ticket_type,ticket_price,ticket_quantity,event_date,event_time,email,status,transaction_id,date,time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        let query = 'INSERT INTO booked_show (user_id,show_id,unique_id,title,ticket_type,ticket_price,ticket_quantity,event_date,event_time,email,status,date,time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
         let value = [1000000,show_id,unique_id,title,ticket_type,ticket_price,ticket_quantity,event_date,event_time,email,status,date,time]
         try {
             db.query(query, value, (err, response) => {
               if (err) {
-                  // throw err;
+                  throw err;
                 return callback({ status: false, message: "error here: "+ err });
               }
               if (response.length === 0) {

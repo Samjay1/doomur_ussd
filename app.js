@@ -10,10 +10,10 @@ const axios = require('axios');
 require('dotenv/config');
 // const ussd = require('./controllers/ussd');
 const wigal = require('./controllers/wigal');
-const nsano = require('./controllers/nsano');
+// const nsano = require('./controllers/nsano');
 const pprompt = require('./controllers/paymentprompt');
-const callback = require('./controllers/callback');
-const book = require('./controllers/book');
+// const callback = require('./controllers/callback');
+// const book = require('./controllers/book');
 
 const app = express();
 
@@ -30,8 +30,8 @@ app.use(cors({
 const PORT = process.env.APP_PORT;
 
 // Cpanel hosted
-app.use('/payment/', callback)
-app.use('/book', book)
+// app.use('/payment/', callback)
+// app.use('/book', book)
 
 // AWS hosted
 app.use('/payment/', pprompt) //payment prompt
