@@ -25,7 +25,7 @@ let EventList = [
         event_name: "CocoFest",
         event_date: '16th Dec',
         event_time: '2:00 PM',
-        price: '1'
+        price: '50'
     },
 
 ]
