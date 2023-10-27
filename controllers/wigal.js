@@ -21,11 +21,11 @@ var time = new Date().toLocaleTimeString();
 
 let EventList = [
     {
-        show_id: '55',
-        event_name: "Python Programming Tutoring",
-        event_date: '29th Oct',
-        event_time: '7:00 PM',
-        price: '300'
+        show_id: '59',
+        event_name: "CocoFest",
+        event_date: '16th Dec',
+        event_time: '2:00 PM',
+        price: '1'
     },
 
 ]
