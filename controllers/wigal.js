@@ -242,7 +242,8 @@ router.get('/', (req, res) => {
     }else{  // msg_type = 2 (end session)
         // req.session.user.count = 1;
         other = 1;
-       console.log('END CALLED')
+        console.log('END CALLED')
+        userdata = "Invalid Input, Please try again"
         res.send(`${network}|END|${msisdn}|${sessionid}|end: ${userdata}|${username}|${trafficid}`)
     }
 
@@ -250,8 +251,8 @@ router.get('/', (req, res) => {
     // req.session.user.count = 1;
     other = 1;
     console.log('catch error CALLED' , error)
-   
-    res.send(`${network}|END|${msisdn}|${sessionid}|error: ${error}|${username}|${trafficid}`)
+    userdata = "Something went wrong, Please try again"
+    res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}`)
     // throw error;
 }
    
