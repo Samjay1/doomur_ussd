@@ -88,7 +88,7 @@ router.get('/', (req, res) => {
         // let count = req.session.user.count || 1;
         // console.log('count :>> ', count);
          // STEP 2: SELECT FROM THE LIST - eTICKETS OR eVOTES
-        if(currentPosition[0]=='1'){
+        if(currentPosition[0]=='1' || userdata==='00'){
             // Update count value 
             // req.session.user.count = 2; 
             // console.log('COUNT ', req.session.user.count);
@@ -165,7 +165,7 @@ router.get('/', (req, res) => {
                 
                 other = `4,event,${event_index},${quantity}`;
 
-                userdata= `Paying an amount of GHS ${price} for ${quantity} ticket(s) to ${event_selected.event_name}^Enter 1 to proceed`;
+                userdata= `Paying an amount of GHS ${price} for ${quantity} ticket(s) to ${event_selected.event_name}^Enter 1 to proceed ^00.Back`;
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
             }
         }
