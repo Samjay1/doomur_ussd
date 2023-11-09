@@ -93,7 +93,7 @@ router.get('/', (req, res) => {
             // req.session.user.count = 2; 
             // console.log('COUNT ', req.session.user.count);
             // Eticktes route
-            if(userdata === '1'){
+            if(userdata === '1' || userdata==='00'){
                 // Get Events from db
                 let events = EventList.map((value,index)=>{
                     return `^${++index}.${value.event_name} (GHS ${value.price}) - ${value.event_date}`
@@ -146,8 +146,8 @@ router.get('/', (req, res) => {
 
             if (quantity < 1 || quantity > 10) { 
                 
-                userdata = 'Quantity must be between 1-10. ^Enter the quantity'
-                other = `3,event,${event_index}`;
+                userdata = 'Quantity must be between 1-10. ^00.Back'
+                other = `1,event,${event_index}`;
 
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
             } else {
