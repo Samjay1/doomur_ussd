@@ -144,7 +144,7 @@ router.get('/', (req, res) => {
             let event_index = currentPosition[2];
             let quantity = userdata;
 
-            if (quantity < 1 && quantity > 10) { 
+            if (quantity < 1 || quantity > 10) { 
                 
                 userdata = 'Quantity must be between 1-10. ^Enter the quantity'
                 other = `3,event,${event_index}`;
