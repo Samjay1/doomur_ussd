@@ -27,6 +27,13 @@ let EventList = [
         event_time: '2:00 PM',
         price: '50'
     },
+    {
+        show_id: '000',
+        event_name: "Online Classes",
+        event_date: '20th Nov',
+        event_time: '2:00 PM',
+        price: '1'
+    },
 
 ]
 let VoteList = [
