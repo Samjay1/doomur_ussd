@@ -143,19 +143,25 @@ router.get('/', (req, res) => {
             // let event_index = req.session.user.item_index;
             let event_index = currentPosition[2];
             let quantity = userdata;
-            console.log('event_index :>> ',event_index);
-            let event_selected = EventList.filter((value,index)=>index===parseInt(event_index))[0];
-            console.log('event_selected',event_selected)
-            let price = parseInt(quantity) * parseFloat(event_selected.price);
-            
-            other = `4,event,${event_index},${quantity}`;
 
-            userdata= `Paying an amount of GHS ${price} for ${quantity} ticket(s) to ${event_selected.event_name}^Enter 1 to proceed`;
+            if (quantity < 1) { 
+                
+                userdata = 'Quantity must be between 1-20 ^00.Back'
+                other = `3,event,${event_index}`;
 
-          
-           
+                res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+            } else {
+                
+                console.log('event_index :>> ',event_index);
+                let event_selected = EventList.filter((value,index)=>index===parseInt(event_index))[0];
+                console.log('event_selected',event_selected)
+                let price = parseInt(quantity) * parseFloat(event_selected.price);
+                
+                other = `4,event,${event_index},${quantity}`;
 
-            res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+                userdata= `Paying an amount of GHS ${price} for ${quantity} ticket(s) to ${event_selected.event_name}^Enter 1 to proceed`;
+                res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+            }
         }
        
         else if(currentPosition[0]=='4'){
