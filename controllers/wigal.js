@@ -147,7 +147,7 @@ router.get('/', (req, res) => {
             if (quantity < 1) { 
                 
                 userdata = 'Quantity must be between 1-20 ^00.Back'
-                other = `3,event,${event_index}`;
+                other = `2,event`;
 
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
             } else {
@@ -164,85 +164,71 @@ router.get('/', (req, res) => {
             }
         }
        
-        else if(currentPosition[0]=='4'){
-
-            let event_index = currentPosition[2];
-            let quantity = currentPosition[3] 
-            let event_selected = EventList.filter((value,index)=>index===parseInt(event_index))[0]; 
-            let price = parseInt(quantity) * parseFloat(event_selected.price); 
-            let itemPrice = event_selected.price
-            let eventId  = event_selected.show_id
+        else if (currentPosition[0] == '4') {
             
-            // SENDING SMS
-            let ticketCode = random.int(10000,100000); //create a unique code
-            let showName = event_selected.event_name;
-            let showDate = event_selected.event_date;
-            let showTime = event_selected.event_time; 
-
- 
-            let transactionID = random.int(100000000,999999999); //create a unique code
-            var url = process.env.PAY_URL;
-            // res.send(`${network}|END|${msisdn}|${sessionid}|Kindly wait for payment prompt|${username}|${trafficid}|${other}`)
-            
-
-            var option= {
-                "amount": parseFloat(price) *1,
-                "appid": process.env.PAY_APP_ID,
-                "clientreference": `REF-${ticketCode}`,
-                "clienttransid": trafficid,
-                "description": 'Thanks for using Doomur.',
-                "nickname": process.env.PAY_CLIENT_REFERENCE,
-                "paymentoption": network.toUpperCase(),
-                "walletnumber": msisdn,
-                "vouchercode":"",
-                "ussdtrafficid": trafficid,
-                "brandtransid": trafficid
-            }
-
-            
-            var payload = {
-                msisdn,
-                amount: (parseFloat(price) *1).toString(),
-                mno: network.toUpperCase(),
-                kuwaita:'malipo',
-                refID:`${ticketCode}`
-            }
-             
-            
-            axios.post('http://3.215.156.108:3000/payment/nsano', payload)
-                .then((response) => {
-                    console.log('payment/nsano CALLED :>> ', response.data.status);
-                    let status = response.data.status
-                    if (status) {
-                        // send bookings to db
-                        let payloadBook = {
-                            eventId, ticketCode, showName,  itemPrice, quantity, showDate, showTime, msisdn,
-                        }         
-                        // Book show
-                        axios.post('https://ussd.doomur.com/book', payloadBook)
-                            .then((response) => {
-                                console.log('BOOKING CALLED :>> ', response.data);
-                                return;
-                            }).catch((error) => {
-                            console.log('https://ussd.doomur.com/book error :>> ', error);
-                            return;
-                        }) 
+            if (userdata == '1') {
+                    let event_index = currentPosition[2];
+                    let quantity = currentPosition[3] 
+                    let event_selected = EventList.filter((value,index)=>index===parseInt(event_index))[0]; 
+                    let price = parseInt(quantity) * parseFloat(event_selected.price); 
+                    let itemPrice = event_selected.price
+                    let eventId  = event_selected.show_id
                     
-                    } else {
-                        // console.log('failed to pay')
-                        var message= `Failed to pay.`;
-                        sendSms(msisdn,message);  
-                    }
-                }).catch((error) => {
-                    console.log('aws:3000/payment/nsaon error :>> ', error);
-                    return;
-            }) 
-            // END PAYMENT INTEGRATION--------------------------------
+                    // SENDING SMS
+                    let ticketCode = random.int(10000,100000); //create a unique code
+                    let showName = event_selected.event_name;
+                    let showDate = event_selected.event_date;
+                    let showTime = event_selected.event_time; 
 
-            userdata = 'Please wait for your payment prompt';
-            res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
-            fs.appendFileSync('finalUssdResponse.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}, {${date},${time}}`)
-            
+        
+                    var payload = {
+                        msisdn,
+                        amount: (parseFloat(price) *1).toString(),
+                        mno: network.toUpperCase(),
+                        kuwaita:'malipo',
+                        refID:`${ticketCode}`
+                    }
+                    
+                    
+                    axios.post('http://3.215.156.108:3000/payment/nsano', payload)
+                        .then((response) => {
+                            console.log('payment/nsano CALLED :>> ', response.data.status);
+                            let status = response.data.status
+                            if (status) {
+                                // send bookings to db
+                                let payloadBook = {
+                                    eventId, ticketCode, showName,  itemPrice, quantity, showDate, showTime, msisdn,
+                                }         
+                                // Book show
+                                axios.post('https://ussd.doomur.com/book', payloadBook)
+                                    .then((response) => {
+                                        console.log('BOOKING CALLED :>> ', response.data);
+                                        return;
+                                    }).catch((error) => {
+                                    console.log('https://ussd.doomur.com/book error :>> ', error);
+                                    return;
+                                }) 
+                            
+                            } else {
+                                // console.log('failed to pay')
+                                var message= `Failed to pay.`;
+                                sendSms(msisdn,message);  
+                            }
+                        }).catch((error) => {
+                            console.log('aws:3000/payment/nsaon error :>> ', error);
+                            return;
+                    }) 
+                    // END PAYMENT INTEGRATION--------------------------------
+
+                    userdata = 'Please wait for your payment prompt';
+                    res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+                    fs.appendFileSync('finalUssdResponse.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}, {${date},${time}}`)
+           
+            } else {
+                    userdata = 'Transaction has been cancelled';
+                    res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+                    
+            }
         }
 
     }else{  // msg_type = 2 (end session)
