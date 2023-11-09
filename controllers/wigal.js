@@ -146,7 +146,7 @@ router.get('/', (req, res) => {
 
             if (quantity < 1) { 
                 
-                userdata = 'Quantity must be between 1-20 ^.Enter the quantity'
+                userdata = 'Quantity must be between 1-20. ^Enter the quantity'
                 other = `3,event,${event_index}`;
 
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
