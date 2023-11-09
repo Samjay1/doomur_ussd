@@ -131,7 +131,7 @@ router.get('/', (req, res) => {
             other = `3,event,${event_index}`;
             
 
-            userdata= `${event_selected.event_name} (GHS ${event_selected.price}) - ${event_selected.event_date}^Enter the quantity`
+            userdata= `${event_selected.event_name} (GHS ${event_selected.price}) - ${event_selected.event_date}^Enter the quantity. ^00.Back`
             res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
 
          // STEP 4: INITIATE PAYMENT AND SMS RECEIPT
@@ -165,7 +165,7 @@ router.get('/', (req, res) => {
                 
                 other = `4,event,${event_index},${quantity}`;
 
-                userdata= `Paying an amount of GHS ${price} for ${quantity} ticket(s) to ${event_selected.event_name}^Enter 1 to proceed ^00.Back`;
+                userdata= `Paying an amount of GHS ${price} for ${quantity} ticket(s) to ${event_selected.event_name}^1. Proceed ^00.Back`;
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
             }
         }
