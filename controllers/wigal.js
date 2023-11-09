@@ -116,7 +116,7 @@ router.get('/', (req, res) => {
             }
             // CLOSING if ussd_body is outside of expected response i.e. 1 or 2
             else{
-                res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+                res.send(`${network}|END|${msisdn}|${sessionid}|${'Invalid Input, Please try again'}|${username}|${trafficid}|${other}`)
             }
        // STEP 3: ENTER QUANTITY FOR - eTICKETS OR eVOTES
         }else if(currentPosition[0]=='2'){
