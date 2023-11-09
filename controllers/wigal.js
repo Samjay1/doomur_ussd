@@ -144,7 +144,13 @@ router.get('/', (req, res) => {
             let event_index = currentPosition[2];
             let quantity = userdata;
 
-            if (quantity < 1 || quantity > 10 || typeof quantity !== 'number') { 
+            if (isNaN(quantity)) {
+                userdata = 'Quantity must be between 1-10. ^00.Back'
+                other = `1,event,${event_index}`;
+
+                res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+            }
+            else if (quantity < 1 || quantity > 10) { 
                 
                 userdata = 'Quantity must be between 1-10. ^00.Back'
                 other = `1,event,${event_index}`;
