@@ -28,11 +28,11 @@ let EventList = [
         price: '50'
     },
     {
-        show_id: '000',
-        event_name: "Online Classes",
-        event_date: '20th Nov',
-        event_time: '2:00 PM',
-        price: '1'
+        show_id: '60',
+        event_name: "BankCity To The World",
+        event_date: '23rd Dec',
+        event_time: '6:00 PM',
+        price: '30'
     },
 
 ]
