@@ -34,6 +34,13 @@ let EventList = [
         event_time: '6:00 PM',
         price: '30'
     },
+    {
+        show_id: '000',
+        event_name: "Big Time Movers",
+        event_date: '23rd Dec',
+        event_time: '6:00 PM',
+        price: '1'
+    },
 
 ]
 let VoteList = [
