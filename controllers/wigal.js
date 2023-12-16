@@ -20,13 +20,27 @@ var date = oldDate.toISOString().split('T')[0];
 var time = new Date().toLocaleTimeString();  
 
 let EventList = [
+    // {
+    //     show_id: '59',
+    //     event_name: "CocoFest",
+    //     event_date: '16th Dec',
+    //     event_time: '2:00 PM',
+    //     price: '50'
+    // },
     {
         show_id: '59',
         event_name: "CocoFest",
         event_date: '16th Dec',
         event_time: '2:00 PM',
-        price: '50'
+        price: '100'
     },
+    // {
+    //     show_id: '59',
+    //     event_name: "CocoFest",
+    //     event_date: '16th Dec',
+    //     event_time: '2:00 PM',
+    //     price: '150'
+    // },
     {
         show_id: '60',
         event_name: "BankCity To The World",
