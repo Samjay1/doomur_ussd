@@ -28,6 +28,13 @@ let EventList = [
         price: '50'
     },
     {
+        show_id: '63',
+        event_name: "Data Analytics (Python)",
+        event_date: '12rd Apr',
+        event_time: '7:00 PM',
+        price: '450'
+    },
+    {
         show_id: '000',
         event_name: "Big Time Movers",
         event_date: '23rd Dec',
