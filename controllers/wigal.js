@@ -151,16 +151,7 @@ router.get('/', (req, res) => {
                  let nominationsList = nominations.map((value,index)=>{
                     return `^${++index}.${value.name}`
                 })
-                //  {
-                //     1|app  |   user: {
-                //     1|app  |     id: 1,
-                //     1|app  |     name: 'John Wick',
-                //     1|app  |     nomineeCode: 'CVLJ',
-                //     1|app  |     createdAt: '2024-08-04T19:56:42.000Z',
-                //     1|app  |     updatedAt: '2024-08-04T19:56:42.000Z'
-                //     1|app  |   },
-                //     1|app  |   nominations: []
-                //     1|app  | }
+              
 
                  userdata = `Vote for ${name}^1.Most Influential L200${nominationsList}^00.Back`
                  other = `4,vote,${vote_index},${nomineeCode}`;
@@ -180,6 +171,7 @@ router.get('/', (req, res) => {
             // Update count value 
 
             let vote_index = currentPosition[2];
+            let nomineeCode = currentPosition[3];
             let categoryId = --userdata;
 
 
