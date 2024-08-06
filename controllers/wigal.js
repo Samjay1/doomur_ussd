@@ -82,7 +82,7 @@ router.get('/', (req, res) => {
     if(mode === 'START'){
         console.log('START called')
  
-        userdata= 'Welcome to Doomur Services^1.Events(tickets)'
+        userdata= 'Welcome to Doomur Services^1.Events(tickets)^2.Evotes'
         res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${1}`)
  
     }else if(mode == 'MORE'){ // msg_type = 1 (continue session)
@@ -146,8 +146,23 @@ router.get('/', (req, res) => {
              axios.get(`https://evoting.doomur.com/api/users/nominations/${vote_index}/${nomineeCode}`)
              .then((response) => {
                  console.log('USER NOMINATION CALLED :>> ', response.data);
+                 let name = response.data.user.name;
+                 let nominations = response.data.nominations;
+                 let nominationsList = nominations.map((value,index)=>{
+                    return `^${++index}.${value.name}`
+                })
+                //  {
+                //     1|app  |   user: {
+                //     1|app  |     id: 1,
+                //     1|app  |     name: 'John Wick',
+                //     1|app  |     nomineeCode: 'CVLJ',
+                //     1|app  |     createdAt: '2024-08-04T19:56:42.000Z',
+                //     1|app  |     updatedAt: '2024-08-04T19:56:42.000Z'
+                //     1|app  |   },
+                //     1|app  |   nominations: []
+                //     1|app  | }
 
-                 userdata = '1.Popular of the year^2.Class Prefect 2024^00.Back'
+                 userdata = `Vote for ${name}^1.Most Influential L200${nominationsList}^00.Back`
                  other = `4,vote,${vote_index},${nomineeCode}`;
  
                  res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
@@ -165,7 +180,8 @@ router.get('/', (req, res) => {
             // Update count value 
 
             let vote_index = currentPosition[2];
-            let categoryId = userdata;
+            let categoryId = --userdata;
+
 
             // API call for nominee to get category list ---------------------------
                 userdata = 'Enter quantity of votes^1 vote is GHS0.5^00.Back'
