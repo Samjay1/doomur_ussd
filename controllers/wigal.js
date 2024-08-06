@@ -81,9 +81,6 @@ router.get('/', (req, res) => {
     // Step 1: etickets or evotes selected
     if(mode === 'START'){
         console.log('START called')
-
-        // req.session.user = {count:1,session_id: sessionid};
-        // console.log('COUNT ', req.session.user.count);
  
         userdata= 'Welcome to Doomur Services^1.Events(tickets)'
         res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${1}`)
@@ -93,14 +90,10 @@ router.get('/', (req, res) => {
         let currentPosition = other.split(',')
 
         console.log('currentPosition :>> ', currentPosition);
-        // let count = req.session.user.count || 1;
-        // console.log('count :>> ', count);
-         // STEP 2: SELECT FROM THE LIST - eTICKETS OR eVOTES
+
+         // STEP 2: SELECT FROM THE LIST - eTICKETS 
         if(currentPosition[0]=='1' || userdata==='00'){
-            // Update count value 
-            // req.session.user.count = 2; 
-            // console.log('COUNT ', req.session.user.count);
-            // Eticktes route
+            //eTICKETS 
             if(userdata === '1' || userdata==='00'){
                 // Get Events from db
                 let events = EventList.map((value,index)=>{
@@ -147,28 +140,49 @@ router.get('/', (req, res) => {
             let vote_index = currentPosition[2];
             let nomineeCode = userdata;
 
+            // API call for nominee to get category list (voteIndex and nomineeCode) ---------------------------
+            
+             // Book show
+             axios.get(`https://evoting.doomur.com/api/users/nominations/${vote_index}/${nomineeCode}`)
+             .then((response) => {
+                 console.log('USER NOMINATION CALLED :>> ', response.data);
+
+                 userdata = '1.Popular of the year^2.Class Prefect 2024^00.Back'
+                 other = `4,vote,${vote_index},${nomineeCode}`;
+ 
+                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+                 return;
+             }).catch((error) => {
+                 console.log('FAILED TO GET USER NOMINATIONS :>> ', error);
+                 res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+                   
+             return;
+             })
+            
+              
+        }
+        else if(currentPosition[0]=='4'){
+            // Update count value 
+
+            let vote_index = currentPosition[2];
+            let categoryId = userdata;
+
             // API call for nominee to get category list ---------------------------
-                userdata = '1.Popular of the year^2.Class Prefect 2024^00.Back'
-                other = `4,vote,${vote_index},${nomineeCode}`;
+                userdata = 'Enter quantity of votes^1 vote is GHS0.5^00.Back'
+                other = `5,vote,${vote_index},${nomineeCode},${categoryId}`;
 
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
         }
        
-        else if (currentPosition[0] == '4') {
+        else if (currentPosition[0] == '5') {
             
-            if (userdata == '1') {
-                    let event_index = currentPosition[2];
-                    let quantity = currentPosition[3] 
-                    let event_selected = EventList.filter((value,index)=>index===parseInt(event_index))[0]; 
-                    let price = parseInt(quantity) * parseFloat(event_selected.price); 
-                    let itemPrice = event_selected.price
-                    let eventId  = event_selected.show_id
-                    
-                    // SENDING SMS
-                    let ticketCode = random.int(10000,100000); //create a unique code
-                    let showName = event_selected.event_name;
-                    let showDate = event_selected.event_date;
-                    let showTime = event_selected.event_time; 
+            // if (userdata == '1') {
+            
+            let categoryId = currentPosition[2];
+            let quantity = userdata 
+            let nomineeCode = currentPosition[3]
+            console.log('categoryId,quantity, nomineeCode :>> ', categoryId, quantity, nomineeCode);
+          
 
         
                     var payload = {
@@ -176,7 +190,7 @@ router.get('/', (req, res) => {
                         amount: (parseFloat(price) *1).toString(),
                         mno: network.toUpperCase(),
                         kuwaita:'malipo',
-                        refID:`${ticketCode}`
+                        refID:`${nomineeCode}`
                     }
                     
                     
@@ -214,11 +228,11 @@ router.get('/', (req, res) => {
                     res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
                     fs.appendFileSync('finalUssdResponse.txt', `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${userdata}, Username:${username}, TrafficID:${trafficid}, Others:${other}, {${date},${time}}`)
            
-            } else {
-                    userdata = 'Transaction has been cancelled';
-                    res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+            // } else {
+            //         userdata = 'Transaction has been cancelled';
+            //         res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
                     
-            }
+            // }
         }
 
     }else{  // msg_type = 2 (end session)
