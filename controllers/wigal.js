@@ -221,8 +221,9 @@ router.get('/', (req, res) => {
                                 console.log('VOTE CALLED SUCCESS :>> ');
                                 // send bookings to db
                                 let payload = {
-                                    votes, refCode, showName, quantity, msisdn,
-                                }         
+                                    votesCast:quantity,amountPaid: (parseFloat(quantity)*0.5), refCode, showName:null, quantity, phoneNumber:msisdn,msisdn,
+                                }  
+                                
                                 // Book show
                                 axios.post(`https://evoting.doomur.com/api/nominations/vote/${nominationId}`, payload)
                                     .then((response) => {
