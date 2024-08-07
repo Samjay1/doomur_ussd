@@ -187,7 +187,7 @@ router.get('/', (req, res) => {
             console.log('2. INTERESTED other :>> ', other);
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
         }
-       
+        // https://ussd.doomur.com/payment
         else if (currentPosition[0] == '5') {
             
             // if (userdata == '1') {
@@ -207,7 +207,7 @@ router.get('/', (req, res) => {
                         amount: (parseFloat(price) *1).toString(),
                         mno: network.toUpperCase(),
                         kuwaita:'malipo',
-                        refID:`${refCode}-${nomineeCode}`
+                        refID:`VOTE-${refCode}-${nomineeCode}`
                     }
                     
                     
@@ -219,7 +219,7 @@ router.get('/', (req, res) => {
                                 console.log('VOTE CALLED SUCCESS :>> ');
                                 // send bookings to db
                                 let payload = {
-                                    votesCast:quantity,amountPaid: (parseFloat(quantity)*0.5), refCode, showName:null, quantity, phoneNumber:msisdn,msisdn,
+                                    votesCast:quantity,amountPaid: (parseFloat(quantity)*0.5), refCode:`VOTE-${refCode}-${nomineeCode}`, showName:null, quantity, phoneNumber:msisdn,msisdn,
                                 }  
                                 
                                 // Book show
