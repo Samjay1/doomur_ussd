@@ -182,7 +182,7 @@ router.get('/', (req, res) => {
             console.log('selectedNominationId :>> ', selectedNominationId);
             // API call for nominee to get category list ---------------------------
                 userdata = 'Enter quantity of votes (1 vote is GHS0.5)^00.Back'
-                other = `5,vote,${vote_index},${nomineeCode},${selectedNominationId[0]??0}`;
+                other = `5,vote,${vote_index},${nomineeCode},${selectedNominationId[0]==undefined ? 0:selectedNominationId[0]}`;
 
             console.log('2. INTERESTED other :>> ', other);
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
