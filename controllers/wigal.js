@@ -179,7 +179,9 @@ router.get('/', (req, res) => {
             let categoryId = --userdata;
 
             let selectedNominationId = saveNominationIds.split(':').map((value, index) => {
+                console.log('index,categoryId,value :>> ', index, categoryId,value);
                 if (index == categoryId) return value;
+             
            })
 
             // API call for nominee to get category list ---------------------------
