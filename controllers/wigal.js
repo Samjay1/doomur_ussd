@@ -175,12 +175,16 @@ router.get('/', (req, res) => {
 
             let vote_index = currentPosition[2];
             let nomineeCode = currentPosition[3];
+            let saveNominationIds = currentPosition[4];
             let categoryId = --userdata;
 
+            let selectedNominationId = saveNominationIds.split(':').map((value, index) => {
+                if (index == categoryId) return value;
+           })
 
             // API call for nominee to get category list ---------------------------
                 userdata = 'Enter quantity of votes (1 vote is GHS0.5)^00.Back'
-                other = `5,vote,${vote_index},${nomineeCode},${categoryId}`;
+                other = `5,vote,${vote_index},${nomineeCode},${categoryId},${selectedNominationId[0]}`;
 
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
         }
