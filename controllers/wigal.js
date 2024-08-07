@@ -173,7 +173,7 @@ router.get('/', (req, res) => {
             let saveNominationIds = currentPosition[4];
             let categoryId = --userdata;
 
-            let selectedNominationId = saveNominationIds.split(':').map((value, index) => {
+            let selectedNominationId = saveNominationIds.split(':').filter((value, index) => {
                 console.log('index,categoryId,value :>> ', index, categoryId,value);
                 if (index == categoryId) return value;
              
