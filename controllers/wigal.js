@@ -51,12 +51,7 @@ let VoteList = [
         event_time: '10:30',
         price: '.50'
     },
-    {
-        event_name: 'Test',
-        event_date: '20-05-2023',
-        event_time: '10:30',
-        price: '350'
-    }
+   
 ]
 
 
