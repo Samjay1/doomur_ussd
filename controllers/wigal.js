@@ -82,7 +82,7 @@ router.get('/', (req, res) => {
     if(mode === 'START'){
         console.log('START called')
  
-        userdata= 'Welcome to Doomur Services^1.Events(tickets)^2.Evotes'
+        userdata= 'Welcome to Doomur Services^1. Events(tickets)^2. Evotes'
         res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${1}`)
  
     }else if(mode == 'MORE'){ // msg_type = 1 (continue session)
@@ -97,7 +97,7 @@ router.get('/', (req, res) => {
             if(userdata === '1' || userdata==='00'){
                 // Get Events from db
                 let events = EventList.map((value,index)=>{
-                    return `^${++index}.${value.event_name} (GHS ${value.price}) - ${value.event_date}`
+                    return `^${++index}. ${value.event_name} (GHS ${value.price}) - ${value.event_date}`
                 })
                 other = '2,event';
                 userdata= `Select an Event ${events}`
@@ -107,7 +107,7 @@ router.get('/', (req, res) => {
             else if(userdata==='2'){
                  // Get Events from db
                  let votes = VoteList.map((value,index)=>{
-                    return `^${++index}.${value.event_name}`
+                    return `^${++index}. ${value.event_name}`
                 })
                 other = '2,vote';
                 userdata= `Select one to Vote ${votes}`
@@ -127,7 +127,7 @@ router.get('/', (req, res) => {
            
             other = `3,votes,${vote_index}`; 
 
-            userdata= `Enter the nominee code^00.Back`
+            userdata= `Enter the nominee code^00. Back`
             res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
 
          // STEP 4: INITIATE PAYMENT AND SMS RECEIPT
@@ -151,11 +151,11 @@ router.get('/', (req, res) => {
                  let saveNominationIds = '';
                  let nominationsList = nominations.map((value, index) => {
                      saveNominationIds += `${value.id}:`;
-                    return `^${++index}.${value.category.name}`
+                    return `^${++index}. ${value.category.name}`
                 })
               
 
-                 userdata = `Vote for ${name}^1.Most Influential L200${nominationsList}^00.Back`
+                 userdata = `Vote for ${name}${nominationsList}^00. Back`
                  other = `4,vote,${vote_index},${nomineeCode},${saveNominationIds}`;
                  console.log('INTERESTED other :>> ', other);
  
@@ -184,7 +184,7 @@ router.get('/', (req, res) => {
 
             // API call for nominee to get category list ---------------------------
                 userdata = 'Enter quantity of votes (1 vote is GHS0.5)^00.Back'
-                other = `5,vote,${vote_index},${nomineeCode},${categoryId},${selectedNominationId[0]}`;
+                other = `5,vote,${vote_index},${nomineeCode},${selectedNominationId[0]}`;
 
             console.log('2. INTERESTED other :>> ', other);
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
@@ -197,16 +197,19 @@ router.get('/', (req, res) => {
             let categoryId = currentPosition[2];
             let quantity = userdata 
             let nomineeCode = currentPosition[3]
+            let nominationId = currentPosition[4]
+
             console.log('categoryId,quantity, nomineeCode :>> ', categoryId, quantity, nomineeCode);
           let price = parseFloat(quantity) * 0.5
 
         
+          let refCode = random.int(10000,100000); //create a unique code
                     var payload = {
                         msisdn,
                         amount: (parseFloat(price) *1).toString(),
                         mno: network.toUpperCase(),
                         kuwaita:'malipo',
-                        refID:`${nomineeCode}`
+                        refID:`${refCode}-${nomineeCode}`
                     }
                     
                     
@@ -217,18 +220,18 @@ router.get('/', (req, res) => {
                             if (status) {
                                 console.log('VOTE CALLED SUCCESS :>> ');
                                 // send bookings to db
-                                // let payloadBook = {
-                                //     eventId, ticketCode, showName,  itemPrice, quantity, showDate, showTime, msisdn,
-                                // }         
-                                // // Book show
-                                // axios.post('https://ussd.doomur.com/book', payloadBook)
-                                //     .then((response) => {
-                                //         console.log('BOOKING CALLED :>> ', response.data);
-                                //         return;
-                                //     }).catch((error) => {
-                                //     console.log('https://ussd.doomur.com/book error :>> ', error);
-                                //     return;
-                                // }) 
+                                let payload = {
+                                    votes, refCode, showName, quantity, msisdn,
+                                }         
+                                // Book show
+                                axios.post(`https://evoting.doomur.com/api/nominations/vote/${nominationId}`, payload)
+                                    .then((response) => {
+                                        console.log('VOTING CALLED :>> ', response.data);
+                                        return;
+                                    }).catch((error) => {
+                                    console.log('https://evoting.doomur.com/api error :>> ', error);
+                                    return;
+                                }) 
                             
                             } else {
                                 // console.log('failed to pay')
