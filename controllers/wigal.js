@@ -143,7 +143,7 @@ router.get('/', (req, res) => {
             // API call for nominee to get category list (voteIndex and nomineeCode) ---------------------------
             
              // Book show
-             axios.get(`https://evoting.doomur.com/api/users/nominations/${vote_index}/${nomineeCode}`)
+             axios.get(`https://evoting.doomur.com/api/users/nominations/${2}/${nomineeCode}`)
              .then((response) => {
                  console.log('USER NOMINATION CALLED :>> ', response.data);
                  let name = response.data.user.name;
