@@ -176,7 +176,7 @@ router.get('/', (req, res) => {
 
 
             // API call for nominee to get category list ---------------------------
-                userdata = 'Enter quantity of votes^1 vote is GHS0.5^00.Back'
+                userdata = 'Enter quantity of votes (1 vote is GHS0.5)^00.Back'
                 other = `5,vote,${vote_index},${nomineeCode},${categoryId}`;
 
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
@@ -190,7 +190,7 @@ router.get('/', (req, res) => {
             let quantity = userdata 
             let nomineeCode = currentPosition[3]
             console.log('categoryId,quantity, nomineeCode :>> ', categoryId, quantity, nomineeCode);
-          
+          let price = parseFloat(quantity) * 0.5
 
         
                     var payload = {
@@ -207,19 +207,20 @@ router.get('/', (req, res) => {
                             console.log('payment/nsano CALLED :>> ', response.data.status);
                             let status = response.data.status
                             if (status) {
+                                console.log('VOTE CALLED SUCCESS :>> ');
                                 // send bookings to db
-                                let payloadBook = {
-                                    eventId, ticketCode, showName,  itemPrice, quantity, showDate, showTime, msisdn,
-                                }         
-                                // Book show
-                                axios.post('https://ussd.doomur.com/book', payloadBook)
-                                    .then((response) => {
-                                        console.log('BOOKING CALLED :>> ', response.data);
-                                        return;
-                                    }).catch((error) => {
-                                    console.log('https://ussd.doomur.com/book error :>> ', error);
-                                    return;
-                                }) 
+                                // let payloadBook = {
+                                //     eventId, ticketCode, showName,  itemPrice, quantity, showDate, showTime, msisdn,
+                                // }         
+                                // // Book show
+                                // axios.post('https://ussd.doomur.com/book', payloadBook)
+                                //     .then((response) => {
+                                //         console.log('BOOKING CALLED :>> ', response.data);
+                                //         return;
+                                //     }).catch((error) => {
+                                //     console.log('https://ussd.doomur.com/book error :>> ', error);
+                                //     return;
+                                // }) 
                             
                             } else {
                                 // console.log('failed to pay')
