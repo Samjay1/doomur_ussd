@@ -150,7 +150,7 @@ router.get('/', (req, res) => {
                  let nominations = response.data.nominations;
                  let saveNominationIds = '';
                  let nominationsList = nominations.map((value, index) => {
-                     saveNominationIds += `${value.id}` + --nominations.length() == index ? '':':';
+                     saveNominationIds += `${value.id}` + --nominations.length == index ? '':':';
                     return `^${++index}.${value.event.name}`
                 })
               
