@@ -186,6 +186,7 @@ router.get('/', (req, res) => {
                 userdata = 'Enter quantity of votes (1 vote is GHS0.5)^00.Back'
                 other = `5,vote,${vote_index},${nomineeCode},${categoryId},${selectedNominationId[0]}`;
 
+            console.log('2. INTERESTED other :>> ', other);
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
         }
        
