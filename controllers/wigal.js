@@ -46,7 +46,7 @@ let EventList = [
 let VoteList = [
     {
         event_id: 2,
-        event_name: 'NFSS Society',
+        event_name: 'NFSS Dinner Nominations',
         event_date: '06-08-2024',
         event_time: '10:30',
         price: '.50'
@@ -150,8 +150,8 @@ router.get('/', (req, res) => {
                  let nominations = response.data.nominations;
                  let saveNominationIds = '';
                  let nominationsList = nominations.map((value, index) => {
-                     saveNominationIds += `${value.id}` + --nominations.length == index ? '':':';
-                    return `^${++index}.${value.event.name}`
+                     saveNominationIds += `${value.id}:`;
+                    return `^${++index}.${value.category.name}`
                 })
               
 
