@@ -148,13 +148,16 @@ router.get('/', (req, res) => {
                  console.log('USER NOMINATION CALLED :>> ', response.data);
                  let name = response.data.user.name;
                  let nominations = response.data.nominations;
-                 let nominationsList = nominations.map((value,index)=>{
-                    return `^${++index}.${value.name}`
+                 let saveNominationIds = '';
+                 let nominationsList = nominations.map((value, index) => {
+                     saveNominationIds += `${value.id}` + --nominations.length() == index ? '':':';
+                    return `^${++index}.${value.event.name}`
                 })
               
 
                  userdata = `Vote for ${name}^1.Most Influential L200${nominationsList}^00.Back`
-                 other = `4,vote,${vote_index},${nomineeCode}`;
+                 other = `4,vote,${vote_index},${nomineeCode},${saveNominationIds}`;
+                 console.log('INTERESTED other :>> ', other);
  
                  res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
                  return;
