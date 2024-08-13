@@ -125,7 +125,7 @@ router.get('/', (req, res) => {
         }else if(currentPosition[0]=='2'){
             // Update count value
             // req.session.user.count = 3;
-            let vote_index = userdata;
+            let vote_index = userdata == 1 ? 2 : 3;
            
             other = `3,votes,${vote_index}`; 
 
@@ -145,7 +145,7 @@ router.get('/', (req, res) => {
             // API call for nominee to get category list (voteIndex and nomineeCode) ---------------------------
             
              // Book show
-             axios.get(`https://evoting.doomur.com/api/users/nominations/${2}/${nomineeCode}`)
+             axios.get(`https://evoting.doomur.com/api/users/nominations/${vote_index}/${nomineeCode}`)
              .then((response) => {
                  console.log('USER NOMINATION CALLED :>> ', response.data);
                  let name = response.data.user.name;
