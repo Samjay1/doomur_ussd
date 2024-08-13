@@ -99,7 +99,7 @@ router.get('/', (req, res) => {
             if(userdata === '1'){
                 // Get Events from db
                 let events = EventList.map((value,index)=>{
-                    return `^${++index}. ${value.event_name} (GHS ${value.price}) - ${value.event_date}`
+                    return `^${++index}.${value.event_name} (GHS ${value.price}) - ${value.event_date}`
                 })
                 other = '2,event';
                 userdata= `Select an Event ${events}`
@@ -109,7 +109,7 @@ router.get('/', (req, res) => {
             else if(userdata==='2' || userdata==='00'){
                  // Get Events from db
                  let votes = VoteList.map((value,index)=>{
-                    return `^${++index}. ${value.event_name}`
+                    return `^${++index}.${value.event_name}`
                 })
                 other = '2,vote';
                 userdata= `Select one to Vote ${votes}`
@@ -153,7 +153,7 @@ router.get('/', (req, res) => {
                  let saveNominationIds = '';
                  let nominationsList = nominations.map((value, index) => {
                      saveNominationIds += `${value.id}:`;
-                    return `^${++index}. ${value.category.name}`
+                    return `^${++index}.${value.category.name}`
                 })
               
 
@@ -198,7 +198,7 @@ router.get('/', (req, res) => {
         else if (currentPosition[0] == '5') {
             
             // if (userdata == '1') {
-            
+            let vote_index = currentPosition[2];
             let categoryId = currentPosition[2];
             let quantity = userdata 
             let nomineeCode = currentPosition[3]
@@ -214,7 +214,7 @@ router.get('/', (req, res) => {
                         amount: (parseFloat(price) *1).toString(),
                         mno: network.toUpperCase(),
                         kuwaita:'malipo',
-                        refID:`VOTE-${refCode}-${nomineeCode}`
+                        refID:`VOTE-${refCode}-n${nominationId}-${nomineeCode}`
                     }
                     
                     
@@ -226,7 +226,7 @@ router.get('/', (req, res) => {
                                 console.log('VOTE CALLED SUCCESS :>> ');
                                 // send bookings to db
                                 let payload = {
-                                    votesCast:quantity,amountPaid: (parseFloat(quantity)*0.5), refCode:`VOTE-${refCode}-${nomineeCode}`, showName:null, quantity, phoneNumber:msisdn,msisdn,
+                                    votesCast:quantity,amountPaid: (parseFloat(quantity)*0.5), refCode:`VOTE-${refCode}-n${nominationId}-${nomineeCode}`, showName:null, quantity, phoneNumber:msisdn,msisdn,
                                 }  
                                 
                                 // Book show
