@@ -51,6 +51,13 @@ let VoteList = [
         event_time: '10:30',
         price: '.50'
     },
+    {
+        event_id: 3,
+        event_name: 'Viva La Vida',
+        event_date: '13-08-2024',
+        event_time: '10:30',
+        price: '.50'
+    },
    
 ]
 
