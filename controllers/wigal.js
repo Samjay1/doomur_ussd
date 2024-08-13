@@ -96,7 +96,7 @@ router.get('/', (req, res) => {
          // STEP 2: SELECT FROM THE LIST - eTICKETS 
         if(currentPosition[0]=='1' || userdata==='00'){
             //eTICKETS 
-            if(userdata === '1' || userdata==='00'){
+            if(userdata === '1'){
                 // Get Events from db
                 let events = EventList.map((value,index)=>{
                     return `^${++index}. ${value.event_name} (GHS ${value.price}) - ${value.event_date}`
@@ -106,7 +106,7 @@ router.get('/', (req, res) => {
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
             }
             // Evotes route
-            else if(userdata==='2'){
+            else if(userdata==='2' || userdata==='00'){
                  // Get Events from db
                  let votes = VoteList.map((value,index)=>{
                     return `^${++index}. ${value.event_name}`
