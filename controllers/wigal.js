@@ -44,13 +44,13 @@ let EventList = [
 
 ]
 let VoteList = [
-    {
-        event_id: 2,
-        event_name: 'NFSS Dinner Nominations',
-        event_date: '06-08-2024',
-        event_time: '10:30',
-        price: '.50'
-    },
+    // {
+    //     event_id: 2,
+    //     event_name: 'NFSS Dinner Nominations',
+    //     event_date: '06-08-2024',
+    //     event_time: '10:30',
+    //     price: '.50'
+    // },
     // {
     //     event_id: 3,
     //     event_name: 'Viva La Vida',
