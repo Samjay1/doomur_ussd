@@ -30,21 +30,21 @@ let EventList = [
     {
         show_id: '65',
         event_name: "Akuapem Nature",
-        event_date: '19th Oct',
+        event_date: '',
         event_time: '8:00 AM',
         price: '6000'
     },
     {
         show_id: '65',
         event_name: "Akuapem Nature",
-        event_date: '19th Oct',
+        event_date: '',
         event_time: '8:00 AM',
         price: '10000'
     },
     {
         show_id: '65',
         event_name: "Akuapem Nature",
-        event_date: '19th Oct',
+        event_date: '',
         event_time: '8:00 AM',
         price: '14000'
     }, 
