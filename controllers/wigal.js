@@ -21,19 +21,33 @@ var time = new Date().toLocaleTimeString();
 
 let EventList = [
     {
-        show_id: '62',
-        event_name: "Kelvynboy Birthday Bash",
-        event_date: '31st Mar',
-        event_time: '8:00 PM',
-        price: '50'
+        show_id: '65',
+        event_name: "Akuapem Nature Retreat(1 Night)",
+        event_date: '19th Oct',
+        event_time: '8:00 AM',
+        price: '2500'
     },
     {
-        show_id: '63',
-        event_name: "Data Analytics (Python)",
-        event_date: '12rd Apr',
-        event_time: '7:00 PM',
-        price: '450'
+        show_id: '65',
+        event_name: "Akuapem Nature Retreat(2 Night)",
+        event_date: '19th Oct',
+        event_time: '8:00 AM',
+        price: '6000'
     },
+    {
+        show_id: '65',
+        event_name: "Akuapem Nature Retreat(3 Night)",
+        event_date: '19th Oct',
+        event_time: '8:00 AM',
+        price: '10000'
+    },
+    {
+        show_id: '65',
+        event_name: "Akuapem Nature Retreat(4 Night)",
+        event_date: '19th Oct',
+        event_time: '8:00 AM',
+        price: '14000'
+    }, 
     {
         show_id: '000',
         event_name: "Big Time Movers",
@@ -62,7 +76,7 @@ let VoteList = [
 ]
 
 
-router.get('/', (req, res) => {
+router.get('/votes', (req, res) => {
     
     let body = req.query;
 
@@ -280,7 +294,7 @@ router.get('/', (req, res) => {
    
 })
 
-router.get('/votes', (req, res) => {
+router.get('/', (req, res) => {
     
     let body = req.query;
 
