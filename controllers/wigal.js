@@ -22,28 +22,28 @@ var time = new Date().toLocaleTimeString();
 let EventList = [
     {
         show_id: '65',
-        event_name: "Akuapem Nature Retreat(1 Night)",
+        event_name: "Akuapem Nature(1 Night)",
         event_date: '19th Oct',
         event_time: '8:00 AM',
         price: '2500'
     },
     {
         show_id: '65',
-        event_name: "Akuapem Nature Retreat(2 Night)",
+        event_name: "Akuapem Nature(2 Night)",
         event_date: '19th Oct',
         event_time: '8:00 AM',
         price: '6000'
     },
     {
         show_id: '65',
-        event_name: "Akuapem Nature Retreat(3 Night)",
+        event_name: "Akuapem Nature(3 Night)",
         event_date: '19th Oct',
         event_time: '8:00 AM',
         price: '10000'
     },
     {
         show_id: '65',
-        event_name: "Akuapem Nature Retreat(4 Night)",
+        event_name: "Akuapem Nature(4 Night)",
         event_date: '19th Oct',
         event_time: '8:00 AM',
         price: '14000'
