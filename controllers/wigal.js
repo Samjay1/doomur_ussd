@@ -348,7 +348,7 @@ router.get('/', (req, res) => {
             else if(userdata==='2'){
                  // Get Events from db
                  let votes = VoteList.map((value,index)=>{
-                    return `^${++index}.${value.event_name} (GHS ${value.price}) - ${value.event_date}`
+                    return `^${++index}.${value.event_name} (GHS ${value.price})`
                 })
                 other = '2,vote';
                 // userdata= `Select one to Vote ${votes}`
