@@ -62,16 +62,16 @@ let EventList = [
     }, 
     {
         show_id: '66',
-        event_name: "Drift(Adult)",
-        event_desc:"Drift (Adult rider & passenger)",
+        event_name: "Drift(+Adult)",
+        event_desc:"Drift (Adult rider&passenger)",
         event_date: '',
         event_time: '9:00 AM',
         price: '1899'
     }, 
     {
         show_id: '66',
-        event_name: "Drift",
-        event_desc:"Drift (Adult rider & child)",
+        event_name: "Drift(+Child)",
+        event_desc:"Drift (Adult rider&child)",
         event_date: '',
         event_time: '9:00 AM',
         price: '1799'
