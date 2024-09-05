@@ -23,6 +23,7 @@ let EventList = [
     {
         show_id: '65',
         event_name: "Akuapem Nature",
+        event_desc: "Akuapem Nature Retreat (1 night)",
         event_date: '19th Oct',
         event_time: '8:00 AM',
         price: '2500'
@@ -30,6 +31,7 @@ let EventList = [
     {
         show_id: '65',
         event_name: "Akuapem Nature",
+        event_desc: "Akuapem Nature Retreat (2 night)",
         event_date: '',
         event_time: '8:00 AM',
         price: '6000'
@@ -37,6 +39,7 @@ let EventList = [
     {
         show_id: '65',
         event_name: "Akuapem Nature",
+        event_desc: "Akuapem Nature Retreat (3 night)",
         event_date: '',
         event_time: '8:00 AM',
         price: '10000'
@@ -44,6 +47,7 @@ let EventList = [
     {
         show_id: '65',
         event_name: "Akuapem Nature",
+        event_desc: "Akuapem Nature Retreat (4 night)",
         event_date: '',
         event_time: '8:00 AM',
         price: '14000'
@@ -51,6 +55,7 @@ let EventList = [
     {
         show_id: '66',
         event_name: "Drift",
+        event_desc:"Drift (Solo Adult)",
         event_date: '',
         event_time: '9:00 AM',
         price: '1299'
@@ -58,6 +63,7 @@ let EventList = [
     {
         show_id: '66',
         event_name: "Drift",
+        event_desc:"Drift (Adult rider & passenger)",
         event_date: '',
         event_time: '9:00 AM',
         price: '1899'
@@ -65,6 +71,7 @@ let EventList = [
     {
         show_id: '66',
         event_name: "Drift",
+        event_desc:"Drift (Adult rider & child)",
         event_date: '',
         event_time: '9:00 AM',
         price: '1799'
@@ -394,7 +401,7 @@ router.get('/', (req, res) => {
             other = `3,event,${event_index}`;
             
 
-            userdata= `${event_selected.event_name} (GHS ${event_selected.price}) - ${event_selected.event_date}^Enter the quantity. ^00.Back`
+            userdata= `${event_selected.event_desc} (GHS ${event_selected.price}) - ${event_selected.event_date}^Enter the quantity. ^00.Back`
             res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
 
          // STEP 4: INITIATE PAYMENT AND SMS RECEIPT
