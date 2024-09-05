@@ -24,7 +24,7 @@ let EventList = [
         show_id: '65',
         event_name: "Akuapem Nature 1Night",
         event_desc: "Akuapem Nature Retreat (1 night)",
-        event_date: '19th Oct',
+        event_date: '19 Oct',
         event_time: '8:00 AM',
         price: '2500'
     },
@@ -32,7 +32,7 @@ let EventList = [
         show_id: '65',
         event_name: "Akuapem Nature 2Night",
         event_desc: "Akuapem Nature Retreat (2 night)",
-        event_date: '',
+        event_date: '19 Oct',
         event_time: '8:00 AM',
         price: '6000'
     },
@@ -40,39 +40,39 @@ let EventList = [
         show_id: '65',
         event_name: "Akuapem Nature 3Night",
         event_desc: "Akuapem Nature Retreat (3 night)",
-        event_date: '',
+        event_date: '19 Oct',
         event_time: '8:00 AM',
         price: '10000'
     },
     {
         show_id: '65',
-        event_name: "Akuapem Nature 4Night",
+        event_name: "Akuapem Nature 4",
         event_desc: "Akuapem Nature Retreat (4 night)",
-        event_date: '',
+        event_date: '28 Sept',
         event_time: '8:00 AM',
         price: '14000'
     }, 
     {
         show_id: '66',
-        event_name: "Drift(Solo)",
+        event_name: "Drift-Solo",
         event_desc:"Drift (Solo Adult)",
-        event_date: '',
+        event_date: '28 Sept',
         event_time: '9:00 AM',
         price: '1299'
     }, 
     {
         show_id: '66',
-        event_name: "Drift(+Adult)",
+        event_name: "Drift+Adult",
         event_desc:"Drift (Adult rider&passenger)",
-        event_date: '',
+        event_date: '28 Sept',
         event_time: '9:00 AM',
         price: '1899'
     }, 
     {
         show_id: '66',
-        event_name: "Drift(+Child)",
+        event_name: "Drift+Child",
         event_desc:"Drift (Adult rider&child)",
-        event_date: '',
+        event_date: '28 Sept',
         event_time: '9:00 AM',
         price: '1799'
     }, 
