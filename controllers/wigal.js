@@ -22,7 +22,7 @@ var time = new Date().toLocaleTimeString();
 let EventList = [
     {
         show_id: '65',
-        event_name: "Akuapem Nature",
+        event_name: "Akuapem Nature 1Night",
         event_desc: "Akuapem Nature Retreat (1 night)",
         event_date: '19th Oct',
         event_time: '8:00 AM',
@@ -30,7 +30,7 @@ let EventList = [
     },
     {
         show_id: '65',
-        event_name: "Akuapem Nature",
+        event_name: "Akuapem Nature 2Night",
         event_desc: "Akuapem Nature Retreat (2 night)",
         event_date: '',
         event_time: '8:00 AM',
@@ -38,7 +38,7 @@ let EventList = [
     },
     {
         show_id: '65',
-        event_name: "Akuapem Nature",
+        event_name: "Akuapem Nature 3Night",
         event_desc: "Akuapem Nature Retreat (3 night)",
         event_date: '',
         event_time: '8:00 AM',
@@ -46,7 +46,7 @@ let EventList = [
     },
     {
         show_id: '65',
-        event_name: "Akuapem Nature",
+        event_name: "Akuapem Nature 4Night",
         event_desc: "Akuapem Nature Retreat (4 night)",
         event_date: '',
         event_time: '8:00 AM',
@@ -54,7 +54,7 @@ let EventList = [
     }, 
     {
         show_id: '66',
-        event_name: "Drift",
+        event_name: "Drift(Solo)",
         event_desc:"Drift (Solo Adult)",
         event_date: '',
         event_time: '9:00 AM',
@@ -62,7 +62,7 @@ let EventList = [
     }, 
     {
         show_id: '66',
-        event_name: "Drift",
+        event_name: "Drift(Adult)",
         event_desc:"Drift (Adult rider & passenger)",
         event_date: '',
         event_time: '9:00 AM',
@@ -366,7 +366,7 @@ router.get('/', (req, res) => {
             if(userdata === '1' || userdata==='00'){
                 // Get Events from db
                 let events = EventList.map((value,index)=>{
-                    return `^${++index}.${value.event_name}(GHS ${value.price})`
+                    return `^${++index}.${value.event_name}`
                 })
                 other = '2,event';
                 userdata= `Events${events}`
