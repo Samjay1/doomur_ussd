@@ -362,7 +362,7 @@ router.get('/', (req, res) => {
                     return `^${++index}.${value.event_name}(GHS ${value.price})`
                 })
                 other = '2,event';
-                userdata= `Select an Event ${events}`
+                userdata= `Events${events}`
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
             }
             // Evotes route
