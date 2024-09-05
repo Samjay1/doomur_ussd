@@ -48,6 +48,27 @@ let EventList = [
         event_time: '8:00 AM',
         price: '14000'
     }, 
+    {
+        show_id: '66',
+        event_name: "Drift",
+        event_date: '',
+        event_time: '9:00 AM',
+        price: '1299'
+    }, 
+    {
+        show_id: '66',
+        event_name: "Drift",
+        event_date: '',
+        event_time: '9:00 AM',
+        price: '1899'
+    }, 
+    {
+        show_id: '66',
+        event_name: "Drift",
+        event_date: '',
+        event_time: '9:00 AM',
+        price: '1799'
+    }, 
     // {
     //     show_id: '000',
     //     event_name: "Big Time Movers",
