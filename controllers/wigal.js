@@ -104,7 +104,7 @@ let VoteList = [
 ]
 
 
-router.get('/votes', (req, res) => {
+router.get('/', (req, res) => {
     
     let body = req.query;
 
