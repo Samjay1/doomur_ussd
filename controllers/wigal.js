@@ -381,8 +381,8 @@ router.get('/', (req, res) => {
                 other = '2,vote';
                 // userdata= `Select one to Vote ${votes}`
                userdata= `Select an Event ${votes}`
-                // res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
-                res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}`)
+                res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
+                // res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}`)
             }
             // CLOSING if ussd_body is outside of expected response i.e. 1 or 2
             else{
