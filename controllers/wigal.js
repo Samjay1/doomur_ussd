@@ -28,54 +28,54 @@ let EventList = [
         event_time: '8:00 AM',
         price: '2500'
     },
-    {
-        show_id: '65',
-        event_name: "Akuapem Nature 2Night",
-        event_desc: "Akuapem Nature Retreat (2 night)",
-        event_date: '19 Oct',
-        event_time: '8:00 AM',
-        price: '6000'
-    },
-    {
-        show_id: '65',
-        event_name: "Akuapem Nature 3Night",
-        event_desc: "Akuapem Nature Retreat (3 night)",
-        event_date: '19 Oct',
-        event_time: '8:00 AM',
-        price: '10000'
-    },
-    {
-        show_id: '65',
-        event_name: "Akuapem Nature 4",
-        event_desc: "Akuapem Nature Retreat (4 night)",
-        event_date: '28 Sept',
-        event_time: '8:00 AM',
-        price: '14000'
-    }, 
-    {
-        show_id: '66',
-        event_name: "Drift-Solo",
-        event_desc:"Drift (Solo Adult)",
-        event_date: '28 Sept',
-        event_time: '9:00 AM',
-        price: '1299'
-    }, 
-    {
-        show_id: '66',
-        event_name: "Drift+Adult",
-        event_desc:"Drift (Adult rider&passenger)",
-        event_date: '28 Sept',
-        event_time: '9:00 AM',
-        price: '1899'
-    }, 
-    {
-        show_id: '66',
-        event_name: "Drift+Child",
-        event_desc:"Drift (Adult rider&child)",
-        event_date: '28 Sept',
-        event_time: '9:00 AM',
-        price: '1799'
-    }, 
+    // {
+    //     show_id: '65',
+    //     event_name: "Akuapem Nature 2Night",
+    //     event_desc: "Akuapem Nature Retreat (2 night)",
+    //     event_date: '19 Oct',
+    //     event_time: '8:00 AM',
+    //     price: '6000'
+    // },
+    // {
+    //     show_id: '65',
+    //     event_name: "Akuapem Nature 3Night",
+    //     event_desc: "Akuapem Nature Retreat (3 night)",
+    //     event_date: '19 Oct',
+    //     event_time: '8:00 AM',
+    //     price: '10000'
+    // },
+    // {
+    //     show_id: '65',
+    //     event_name: "Akuapem Nature 4",
+    //     event_desc: "Akuapem Nature Retreat (4 night)",
+    //     event_date: '28 Sept',
+    //     event_time: '8:00 AM',
+    //     price: '14000'
+    // }, 
+    // {
+    //     show_id: '66',
+    //     event_name: "Drift-Solo",
+    //     event_desc:"Drift (Solo Adult)",
+    //     event_date: '28 Sept',
+    //     event_time: '9:00 AM',
+    //     price: '1299'
+    // }, 
+    // {
+    //     show_id: '66',
+    //     event_name: "Drift+Adult",
+    //     event_desc:"Drift (Adult rider&passenger)",
+    //     event_date: '28 Sept',
+    //     event_time: '9:00 AM',
+    //     price: '1899'
+    // }, 
+    // {
+    //     show_id: '66',
+    //     event_name: "Drift+Child",
+    //     event_desc:"Drift (Adult rider&child)",
+    //     event_date: '28 Sept',
+    //     event_time: '9:00 AM',
+    //     price: '1799'
+    // }, 
     // {
     //     show_id: '000',
     //     event_name: "Big Time Movers",
@@ -86,13 +86,13 @@ let EventList = [
 
 ]
 let VoteList = [
-    // {
-    //     event_id: 2,
-    //     event_name: 'NFSS Dinner Nominations',
-    //     event_date: '06-08-2024',
-    //     event_time: '10:30',
-    //     price: '.50'
-    // },
+    {
+        event_id: 4,
+        event_name: "Noche D'Amor",
+        event_date: '03-01-2025',
+        event_time: '10:30',
+        price: '.50'
+    },
     // {
     //     event_id: 3,
     //     event_name: 'Viva La Vida',
