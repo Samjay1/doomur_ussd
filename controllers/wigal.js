@@ -374,11 +374,11 @@ router.get('/', (req, res) => {
             }
             // Evotes route
             else if(userdata==='2'){
-                 // Get Events from db
+                 // Get Votes from db
                  let votes = VoteList.map((value,index)=>{
                     return `^${++index}.${value.event_name}(GHS ${value.price})`
                 })
-                other = '2,vote';
+                other = '3,vote';
                 // userdata= `Select one to Vote ${votes}`
                userdata= `Select an Event ${votes}`
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
