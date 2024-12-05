@@ -322,7 +322,7 @@ router.get('/votes', (req, res) => {
    
 })
 
-router.get('/', (req, res) => {
+router.get('/vote', (req, res) => {
     
     let body = req.query;
 
@@ -378,7 +378,7 @@ router.get('/', (req, res) => {
                  let votes = VoteList.map((value,index)=>{
                     return `^${++index}.${value.event_name}(GHS ${value.price})`
                 })
-                other = '3,vote';
+                other = '2,vote';
                 // userdata= `Select one to Vote ${votes}`
                userdata= `Select an Event ${votes}`
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
