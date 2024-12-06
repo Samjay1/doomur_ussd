@@ -104,6 +104,7 @@ let VoteList = [
 ]
 
 
+// LIVE ENDPOINT
 router.get('/', (req, res) => {
     
     let body = req.query;
@@ -181,7 +182,7 @@ router.get('/', (req, res) => {
          
             // console.log('COUNT ', req.session.user.count);
             // let event_index = req.session.user.item_index;
-            let vote_index = currentPosition[2];
+            let vote_index =  4 //currentPosition[2];
             let nomineeCode = userdata;
 
             // API call for nominee to get category list (voteIndex and nomineeCode) ---------------------------
