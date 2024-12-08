@@ -231,7 +231,7 @@ router.get('/', (req, res) => {
 
             console.log('selectedNominationId :>> ', selectedNominationId);
             // API call for nominee to get category list ---------------------------
-                userdata = 'Enter quantity of votes (1 vote is GHS0.5)^00.Back'
+                userdata = 'Enter quantity of votes (1 vote is GHS 1)^00.Back'
                 other = `5,vote,${vote_index},${nomineeCode},${selectedNominationId[0]==undefined ? 0:selectedNominationId[0]}`;
 
             console.log('2. INTERESTED other :>> ', other);
@@ -248,7 +248,7 @@ router.get('/', (req, res) => {
             let nominationId = currentPosition[4]
 
             console.log('categoryId,quantity, nomineeCode :>> ', categoryId, quantity, nomineeCode);
-          let price = parseFloat(quantity) * 0.5
+          let price = parseFloat(quantity) * 1.0
 
         
           let refCode = random.int(10000,100000); //create a unique code
@@ -269,7 +269,7 @@ router.get('/', (req, res) => {
                                 console.log('VOTE CALLED SUCCESS :>> ');
                                 // send bookings to db
                                 let payload = {
-                                    votesCast:quantity,amountPaid: (parseFloat(quantity)*0.5), refCode:`VOTE-${refCode}-n${nominationId}-${nomineeCode}`, showName:null, quantity, phoneNumber:msisdn,msisdn,
+                                    votesCast:quantity,amountPaid: (parseFloat(quantity)*1.0), refCode:`VOTE-${refCode}-n${nominationId}-${nomineeCode}`, showName:null, quantity, phoneNumber:msisdn,msisdn,
                                 }  
                                 
                                 // Book show
