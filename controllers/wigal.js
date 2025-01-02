@@ -105,7 +105,7 @@ let VoteList = [
 
 
 // LIVE ENDPOINT
-router.get('/', (req, res) => {
+router.get('/vote', (req, res) => {
     
     let body = req.query;
 
@@ -323,7 +323,7 @@ router.get('/', (req, res) => {
    
 })
 
-router.get('/vote', (req, res) => {
+router.get('/', (req, res) => {
     
     let body = req.query;
 
