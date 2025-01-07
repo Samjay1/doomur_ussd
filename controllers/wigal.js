@@ -21,11 +21,18 @@ var time = new Date().toLocaleTimeString();
 
 let EventList = [
     {
-        show_id: '000',
-        event_name: "Big Time Movers",
-        event_date: '23rd Dec',
+        show_id: '67',
+        event_name: "Elite party - single",
+        event_date: '24th Jan',
         event_time: '6:00 PM',
-        price: '1'
+        price: '80'
+    },
+    {
+        show_id: '67',
+        event_name: "Elite party - double",
+        event_date: '24th Jan',
+        event_time: '6:00 PM',
+        price: '150'
     },
 
 ]
@@ -42,7 +49,7 @@ let VoteList = [
 
 
 // LIVE ENDPOINT
-router.get('/vote', (req, res) => {
+router.get('/', (req, res) => {
     
     let body = req.query;
 
@@ -262,7 +269,7 @@ router.get('/vote', (req, res) => {
 
 
 // PAUSE ENDPOINT
-router.get('/', (req, res) => {
+router.get('/vote', (req, res) => {
     
     let body = req.query;
 
