@@ -49,7 +49,7 @@ let VoteList = [
 
 
 // LIVE ENDPOINT
-router.get('/', (req, res) => {
+router.get('/vote', (req, res) => {
     
     let body = req.query;
 
@@ -81,7 +81,7 @@ router.get('/', (req, res) => {
         console.log('currentPosition :>> ', currentPosition);
 
          // STEP 2: SELECT FROM THE LIST - eTICKETS 
-        if(currentPosition[0]=='1' || userdata==='00'){
+        if(currentPosition[0]=='1' || userdata==='00') {
             //eTICKETS 
             if(userdata === '1'){
                 // Get Events from db
@@ -269,7 +269,7 @@ router.get('/', (req, res) => {
 
 
 // PAUSE ENDPOINT
-router.get('/vote', (req, res) => {
+router.get('/', (req, res) => {
     
     let body = req.query;
 
@@ -346,6 +346,7 @@ router.get('/vote', (req, res) => {
             let event_selected = EventList.filter((value,index)=>index===event_index)[0];
             // console.log('event_selected :>> ', event_selected,ussd_body);
             other = `3,event,${event_index}`;
+            console.log('other :>> ', other);
             
 
             userdata= `${event_selected.event_desc} (GHS ${event_selected.price}) - ${event_selected.event_date}^Enter the quantity. ^00.Back`
