@@ -349,7 +349,7 @@ router.get('/', (req, res) => {
             console.log('other :>> ', other);
             
 
-            userdata= `${event_selected.event_desc} (GHS ${event_selected.price}) - ${event_selected.event_date}^Enter the quantity. ^00.Back`
+            userdata= `${event_selected.event_name} (GHS ${event_selected.price}) - ${event_selected.event_date}^Enter the quantity. ^00.Back`
             res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
 
          // STEP 4: INITIATE PAYMENT AND SMS RECEIPT
