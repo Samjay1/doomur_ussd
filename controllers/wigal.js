@@ -333,8 +333,8 @@ router.get('/', (req, res) => {
                     return `^${++index}.${value.event_name}(GHS ${value.price})`
                 })
                 other = '2,vote';
-                // userdata= `Select one to Vote ${votes}`
-               userdata= `Select an Event ${votes}`
+                userdata= `No event currently`
+            //    userdata= `Select an Event ${votes}`
                 res.send(`${network}|MORE|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`)
                 // res.send(`${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}`)
             }
