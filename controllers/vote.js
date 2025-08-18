@@ -461,9 +461,7 @@ const eVoteFlowFunc = (
       let votingPrice = 1;
       userdata = `Vote for John ${nomimeeCode} (1 vote is GHS ${votingPrice}). Enter quantity^00.Back`;
       console.log(userdata);
-      other = `${++position},${
-        serviceType.EVOTE.name
-      },${nomimeeCode}|${votingPrice}`;
+      other = `${++position},${serviceType.EVOTE.name},${nomimeeCode},${votingPrice}`;
       console.log(other);
       return res.send(
         formatResponseFunc({
