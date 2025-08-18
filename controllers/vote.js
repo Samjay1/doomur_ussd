@@ -480,8 +480,8 @@ const eVoteFlowFunc = (
       console.log("userdata :>> ", userdata);
       let quantity = userdata;
 
-      let nominee = userInputs[2];
-      let votePrice = userInputs[3];
+      let nominee = extraData[2];
+      let votePrice = extraData[3];
       let amount = parseInt(quantity) * parseInt(votePrice);
 
       userdata = `Please wait for payment prompt for GHS ${amount}`;
