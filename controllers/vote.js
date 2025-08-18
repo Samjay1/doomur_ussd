@@ -504,7 +504,7 @@ const eVoteFlowFunc = (
         kuwaita: "malipo",
         refID: `DRM-${refID}-${nominee}`,
       };
-    //   makePaymentFunc(payload, nominee);
+      makePaymentFunc(payload, nominee);
      return res.send(
         formatResponseFunc({
           mode: "END",
