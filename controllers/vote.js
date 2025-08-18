@@ -469,7 +469,9 @@ const eVoteFlowFunc = (
         formatResponseFunc({
           mode: "MORE",
           userdata: userdata,
-          other: other,
+          other: `${++position},${
+        serviceType.EVOTE.name
+      },${nomimeeCode}|${votingPrice}`,
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
