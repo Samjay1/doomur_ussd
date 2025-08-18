@@ -269,7 +269,7 @@ router.get("/", (req, res) => {
     console.log("mode :>> ", mode);
     if (mode == "START") {
       userdata = "Welcome to Doomur Services^1.Votes^2.Tickets";
-      res.send(
+      return res.send(
         formatResponseFunc({
           mode: "MORE",
           userdata: userdata,
@@ -318,7 +318,7 @@ router.get("/", (req, res) => {
           res
         );
       } else {
-        res.send(
+        return res.send(
           formatResponseFunc({
             mode: "END",
             userdata: "Error input ll",
@@ -331,10 +331,11 @@ router.get("/", (req, res) => {
           })
         );
       }
-    } else {
+    }
+    else {
       console.log("END CALLED");
       userdata = "Invalid Input, Please try again";
-      res.send(
+      return res.send(
         formatResponseFunc({
           mode: "END",
           userdata: userdata,
@@ -347,10 +348,11 @@ router.get("/", (req, res) => {
         })
       );
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.log("catch error CALLED", error);
     userdata = "Something went wrong, Please try again";
-    res.send(
+    return res.send(
       formatResponseFunc({
         mode: "END",
         userdata: userdata,
@@ -381,7 +383,6 @@ const formatResponseFunc = ({
 };
 
 const extractDataFunc = (other) => {
-  console.log("other :>> ", other);
   try {
     const otherData = other.split(",");
     const position = otherData[0];
@@ -409,7 +410,7 @@ const eVoteFlowFunc = (
   switch (position) {
     case 1:
       if (userdata == "00") {
-        res.send(
+        return res.send(
           formatResponseFunc({
             mode: "MORE",
             userdata: "Welcome to Doomur Services^1.Votes^2.Tickets",
@@ -425,7 +426,7 @@ const eVoteFlowFunc = (
 
       userdata = "Enter nominee code^00.Back";
       console.log(userdata);
-      res.send(
+      return res.send(
         formatResponseFunc({
           mode: "MORE",
           userdata: userdata,
@@ -439,10 +440,10 @@ const eVoteFlowFunc = (
       );
       break;
     case 2:
-      console.log("userdata :>> ", userdata);
+      console.log("User input :>> ", userdata);
       let nomimeeCode = userdata;
       if (userdata == "00") {
-        res.send(
+        return res.send(
           formatResponseFunc({
             mode: "MORE",
             userdata: "Enter nominee code^00.Back",
@@ -460,13 +461,15 @@ const eVoteFlowFunc = (
       let votingPrice = 1;
       userdata = `Vote for John ${nomimeeCode} (1 vote is GHS ${votingPrice}). Enter quantity^00.Back`;
       console.log(userdata);
-      res.send(
+      other = `${++position},${
+        serviceType.EVOTE.name
+      },${nomimeeCode}|${votingPrice}`;
+      console.log(other);
+      return res.send(
         formatResponseFunc({
           mode: "MORE",
           userdata: userdata,
-          other: `${++position},${
-            serviceType.EVOTE.name
-          },${nomimeeCode}|${votingPrice}`,
+          other: other,
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
@@ -477,17 +480,21 @@ const eVoteFlowFunc = (
       break;
 
     case 3:
-      console.log("userdata :>> ", userdata,extraData);
+      console.log("userdata :>> ", userdata, extraData);
       let quantity = userdata;
 
       let nominee = extraData.userInputs[0];
       let votePrice = extraData.userInputs[1];
-          let amount = parseInt(quantity) * parseInt(votePrice);
-          console.log('nominee, votePrice :>> ', nominee, votePrice);
+      let amount = parseInt(quantity) * parseInt(votePrice);
+      console.log("nominee, votePrice :>> ", nominee, votePrice);
 
       userdata = `Please wait for payment prompt for GHS ${amount}`;
       console.log(userdata);
-
+      other = `${++position},${
+        serviceType.EVOTE.name
+      },${nominee}|${votePrice}|${quantity}`;
+          console.log(other);
+          
       let refID = randomUUID();
 
       let payload = {
@@ -498,11 +505,13 @@ const eVoteFlowFunc = (
         refID: `DRM-${refID}-${nominee}`,
       };
       makePaymentFunc(payload, nominee);
-      res.send(
+     return res.send(
         formatResponseFunc({
           mode: "END",
           userdata: userdata,
-          other: `${++position},${serviceType.EVOTE.name},${nominee}|${votePrice}|${quantity}`,
+          other: `${++position},${
+            serviceType.EVOTE.name
+          },${nominee}|${votePrice}|${quantity}`,
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
@@ -531,7 +540,7 @@ const eTicketFlowFunc = (
   }
 };
 
-const makePaymentFunc = (payload,nomimeeCode) => {
+const makePaymentFunc = (payload, nomimeeCode) => {
   axios
     .post("http://3.215.156.108:3000/payment/nsano", payload)
     .then((response) => {
