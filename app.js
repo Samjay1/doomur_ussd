@@ -15,6 +15,8 @@ const pprompt = require('./controllers/paymentprompt');
 // const callback = require('./controllers/callback');
 // const book = require('./controllers/book');
 
+const vote = require('./controllers/vote')
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -35,7 +37,8 @@ const PORT = process.env.APP_PORT;
 
 // AWS hosted
 app.use('/payment/', pprompt) //payment prompt
-app.use('/', wigal) //USSD
+// app.use('/', wigal) //USSD
+app.use('/', vote)
 
 // app.use('/payment/', nsano)
 
