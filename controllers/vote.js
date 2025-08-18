@@ -203,20 +203,20 @@ const eVoteFlowFunc = (
       break;
     case 2:
       let nomimeeCode = userdata;
-      if (userdata == "00") {
-        return res.send(
-          formatResponseFunc({
-            mode: "MORE",
-            userdata: "Enter nominee code^00.Back",
-            other: `${position},${serviceType.EVOTE.name}`,
-            network: network,
-            msisdn: msisdn,
-            sessionid: sessionid,
-            username: username,
-            trafficid: trafficid,
-          })
-        );
-      }
+    //   if (userdata == "00") {
+    //     return res.send(
+    //       formatResponseFunc({
+    //         mode: "MORE",
+    //         userdata: "Enter nominee code^00.Back",
+    //         other: `${position},${serviceType.EVOTE.name}`,
+    //         network: network,
+    //         msisdn: msisdn,
+    //         sessionid: sessionid,
+    //         username: username,
+    //         trafficid: trafficid,
+    //       })
+    //     );
+    //   }
       // find user by nominee code
       //   get voting price
       let votingPrice = 1;
