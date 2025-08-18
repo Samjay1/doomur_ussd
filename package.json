@@ -20,7 +20,8 @@
     "express-session": "^1.17.3",
     "mysql": "^2.18.1",
     "random": "^3.0.6",
-    "underscore": "^1.13.3"
+    "underscore": "^1.13.3",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"

@@ -4,7 +4,7 @@ const random = require("random");
 const fs = require("fs");
 const axios = require("axios");
 const sendSms = require("./sms");
-const {randomUUID} = require("crypto");
+const { v4: uuidv4 } = require('uuid');
 require("dotenv/config");
 
 const router = express.Router();
@@ -331,8 +331,7 @@ router.get("/", (req, res) => {
           })
         );
       }
-    }
-    else {
+    } else {
       console.log("END CALLED");
       userdata = "Invalid Input, Please try again";
       return res.send(
@@ -348,8 +347,7 @@ router.get("/", (req, res) => {
         })
       );
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.log("catch error CALLED", error);
     userdata = "Something went wrong, Please try again";
     return res.send(
@@ -387,8 +385,8 @@ const extractDataFunc = (other) => {
     const otherData = other.split(",");
     const position = otherData[0];
     const serviceType = otherData.length > 1 ? otherData[1] : "n/a";
-      const userInputs1 = otherData.length > 2 ? otherData[2] : "";
-      const userInputs2 = otherData.length > 3 ? otherData[3] : "";
+    const userInputs1 = otherData.length > 2 ? otherData[2] : "";
+    const userInputs2 = otherData.length > 3 ? otherData[3] : "";
 
     return {position, serviceType, userInputs1, userInputs2};
   } catch (error) {
@@ -440,7 +438,7 @@ const eVoteFlowFunc = (
         })
       );
       break;
-    case 2: 
+    case 2:
       let nomimeeCode = userdata;
       if (userdata == "00") {
         return res.send(
@@ -461,16 +459,18 @@ const eVoteFlowFunc = (
       let votingPrice = 1;
       userdata = `Vote for John ${nomimeeCode} (1 vote is GHS ${votingPrice}). Enter quantity^00.Back`;
       console.log(userdata);
-      other = `${++position},${serviceType.EVOTE.name},${nomimeeCode},${votingPrice}`;
+      other = `${++position},${
+        serviceType.EVOTE.name
+      },${nomimeeCode},${votingPrice}`;
       console.log(other);
       return res.send(
         formatResponseFunc({
           mode: "MORE",
           userdata: userdata,
-    //       other: `${++position},${
-    //     serviceType.EVOTE.name
-            //   },${nomimeeCode}|${votingPrice}`,
-          other:'3,EVOTE,NOMINEE,1',
+          //       other: `${++position},${
+          //     serviceType.EVOTE.name
+          //   },${nomimeeCode}|${votingPrice}`,
+          other: "3,EVOTE,NOMINEE,1",
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
@@ -480,7 +480,7 @@ const eVoteFlowFunc = (
       );
       break;
 
-    case 3: 
+    case 3:
       let quantity = userdata;
 
       let nominee = extraData.userInputs1;
@@ -493,19 +493,20 @@ const eVoteFlowFunc = (
       other = `${++position},${
         serviceType.EVOTE.name
       },${nominee},${votePrice},${quantity}`;
-          console.log(other);
-          
-      let refID = randomUUID();
+      console.log(other);
+
+      const refID = uuidv4();
 
       let payload = {
         msisdn,
         amount: amount,
         mno: network.toUpperCase(),
         kuwaita: "malipo",
-        refID: `DRM-${refID}-${nominee}`,
+        refID: `DRM:${refID}:${nominee}`,
       };
+        //   console.log('payload :>> ', payload);
       makePaymentFunc(payload, nominee);
-     return res.send(
+      return res.send(
         formatResponseFunc({
           mode: "END",
           userdata: userdata,
