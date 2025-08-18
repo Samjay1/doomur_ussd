@@ -4,6 +4,7 @@ const random = require("random");
 const fs = require("fs");
 const axios = require("axios");
 const sendSms = require("./sms");
+const {randomUUID} = require("crypto");
 require("dotenv/config");
 
 const router = express.Router();
@@ -292,6 +293,7 @@ router.get("/", (req, res) => {
         return eVoteFlowFunc(
           userdata,
           parseInt(extracData.position),
+          extracData,
           network,
           msisdn,
           sessionid,
@@ -307,6 +309,7 @@ router.get("/", (req, res) => {
         return eTicketFlowFunc(
           userdata,
           parseInt(extracData.position),
+          extracData,
           network,
           msisdn,
           sessionid,
@@ -395,6 +398,7 @@ const extractDataFunc = (other) => {
 const eVoteFlowFunc = (
   userdata,
   position,
+  extraData,
   network,
   msisdn,
   sessionid,
@@ -404,7 +408,22 @@ const eVoteFlowFunc = (
 ) => {
   switch (position) {
     case 1:
-      userdata = "Enter nominee code";
+      if (userdata == "00") {
+        res.send(
+          formatResponseFunc({
+            mode: "MORE",
+            userdata: "Welcome to Doomur Services^1.Votes^2.Tickets",
+            other: `${position},${serviceType.EVOTE.name}`,
+            network: network,
+            msisdn: msisdn,
+            sessionid: sessionid,
+            username: username,
+            trafficid: trafficid,
+          })
+        );
+      }
+
+      userdata = "Enter nominee code^00.Back";
       console.log(userdata);
       res.send(
         formatResponseFunc({
@@ -422,14 +441,32 @@ const eVoteFlowFunc = (
     case 2:
       console.log("userdata :>> ", userdata);
       let nomimeeCode = userdata;
+      if (userdata == "00") {
+        res.send(
+          formatResponseFunc({
+            mode: "MORE",
+            userdata: "Enter nominee code^00.Back",
+            other: `${position},${serviceType.EVOTE.name}`,
+            network: network,
+            msisdn: msisdn,
+            sessionid: sessionid,
+            username: username,
+            trafficid: trafficid,
+          })
+        );
+      }
       // find user by nominee code
-      userdata = "Vote for John (1 vote is GHS 1). Enter quantity";
+      //   get voting price
+      let votingPrice = 1;
+      userdata = `Vote for John ${nomimeeCode} (1 vote is GHS ${votingPrice}). Enter quantity^00.Back`;
       console.log(userdata);
       res.send(
         formatResponseFunc({
           mode: "MORE",
           userdata: userdata,
-          other: `${++position},${serviceType.EVOTE.name},${nomimeeCode}`,
+          other: `${++position},${
+            serviceType.EVOTE.name
+          },${nomimeeCode},${votingPrice}`,
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
@@ -442,12 +479,27 @@ const eVoteFlowFunc = (
     case 3:
       console.log("userdata :>> ", userdata);
       let quantity = userdata;
-      // find user by nominee code
-      userdata = "Please wait for payment prompt for GHS 10";
+
+      let nominee = userInputs[2];
+      let votePrice = userInputs[3];
+      let amount = parseInt(quantity) * parseInt(votePrice);
+
+      userdata = `Please wait for payment prompt for GHS ${amount}`;
       console.log(userdata);
+
+      let refID = randomUUID();
+
+      let payload = {
+        msisdn,
+        amount: amount,
+        mno: network.toUpperCase(),
+        kuwaita: "malipo",
+        refID: `DRM-${refID}-nominee`,
+      };
+      makePaymentFunc(payload, nominee);
       res.send(
         formatResponseFunc({
-          mode: "MORE",
+          mode: "END",
           userdata: userdata,
           other: `${++position},${serviceType.EVOTE.name},${quantity}`,
           network: network,
@@ -464,6 +516,7 @@ const eVoteFlowFunc = (
 const eTicketFlowFunc = (
   userdata,
   position,
+  extraData,
   network,
   msisdn,
   sessionid,
@@ -475,6 +528,47 @@ const eTicketFlowFunc = (
     case 1:
       break;
   }
+};
+
+const makePaymentFunc = (payload,nomimeeCode) => {
+  axios
+    .post("http://3.215.156.108:3000/payment/nsano", payload)
+    .then((response) => {
+      console.log("payment/nsano CALLED :>> ", response.data.status);
+      let status = response.data.status;
+      if (status) {
+        // send bookings to db
+        // let payloadBook = {
+        //   eventId,
+        //   ticketCode,
+        //   showName,
+        //   itemPrice,
+        //   quantity,
+        //   showDate,
+        //   showTime,
+        //   msisdn,
+        // };
+        // // Book show
+        // axios
+        //   .post("https://ussd.doomur.com/book", payloadBook)
+        //   .then((response) => {
+        //     console.log("BOOKING CALLED :>> ", response.data);
+        //     return;
+        //   })
+        //   .catch((error) => {
+        //     console.log("https://ussd.doomur.com/book error :>> ", error);
+        //     return;
+        //   });
+      } else {
+        // console.log('failed to pay')
+        var message = `Failed to pay.`;
+        sendSms(msisdn, message);
+      }
+    })
+    .catch((error) => {
+      console.log("aws:3000/payment/nsaon error :>> ", error);
+      return;
+    });
 };
 
 module.exports = router;
