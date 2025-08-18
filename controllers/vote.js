@@ -466,7 +466,7 @@ const eVoteFlowFunc = (
           userdata: userdata,
           other: `${++position},${
             serviceType.EVOTE.name
-          },${nomimeeCode},${votingPrice}`,
+          },${nomimeeCode}|${votingPrice}`,
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
@@ -477,12 +477,13 @@ const eVoteFlowFunc = (
       break;
 
     case 3:
-      console.log("userdata :>> ", userdata);
+      console.log("userdata :>> ", userdata,extraData);
       let quantity = userdata;
 
-      let nominee = extraData[2];
-      let votePrice = extraData[3];
-      let amount = parseInt(quantity) * parseInt(votePrice);
+      let nominee = extraData.userInputs[0];
+      let votePrice = extraData.userInputs[1];
+          let amount = parseInt(quantity) * parseInt(votePrice);
+          console.log('nominee, votePrice :>> ', nominee, votePrice);
 
       userdata = `Please wait for payment prompt for GHS ${amount}`;
       console.log(userdata);
@@ -494,14 +495,14 @@ const eVoteFlowFunc = (
         amount: amount,
         mno: network.toUpperCase(),
         kuwaita: "malipo",
-        refID: `DRM-${refID}-nominee`,
+        refID: `DRM-${refID}-${nominee}`,
       };
       makePaymentFunc(payload, nominee);
       res.send(
         formatResponseFunc({
           mode: "END",
           userdata: userdata,
-          other: `${++position},${serviceType.EVOTE.name},${quantity}`,
+          other: `${++position},${serviceType.EVOTE.name},${nominee}|${votePrice}|${quantity}`,
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
@@ -566,7 +567,7 @@ const makePaymentFunc = (payload,nomimeeCode) => {
       }
     })
     .catch((error) => {
-      console.log("aws:3000/payment/nsaon error :>> ", error);
+      console.log("aws:3000/payment/nsaon error :>> ", error.message);
       return;
     });
 };
