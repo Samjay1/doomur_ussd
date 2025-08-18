@@ -387,9 +387,10 @@ const extractDataFunc = (other) => {
     const otherData = other.split(",");
     const position = otherData[0];
     const serviceType = otherData.length > 1 ? otherData[1] : "n/a";
-    const userInputs = otherData.length > 2 ? otherData[2].split("|") : "";
+      const userInputs1 = otherData.length > 2 ? otherData[2] : "";
+      const userInputs2 = otherData.length > 3 ? otherData[3] : "";
 
-    return {position, serviceType, userInputs};
+    return {position, serviceType, userInputs1, userInputs2};
   } catch (error) {
     console.log("error :>> ", error);
     return;
@@ -439,8 +440,7 @@ const eVoteFlowFunc = (
         })
       );
       break;
-    case 2:
-      console.log("User input :>> ", userdata);
+    case 2: 
       let nomimeeCode = userdata;
       if (userdata == "00") {
         return res.send(
@@ -470,7 +470,7 @@ const eVoteFlowFunc = (
     //       other: `${++position},${
     //     serviceType.EVOTE.name
             //   },${nomimeeCode}|${votingPrice}`,
-          other:3,
+          other:'3,EVOTE,NOMINEE,1',
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
@@ -480,12 +480,11 @@ const eVoteFlowFunc = (
       );
       break;
 
-    case 3:
-      console.log("userdata :>> ", userdata, extraData);
+    case 3: 
       let quantity = userdata;
 
-      let nominee = extraData.userInputs[0];
-      let votePrice = extraData.userInputs[1];
+      let nominee = extraData.userInputs1;
+      let votePrice = extraData.userInputs2;
       let amount = parseInt(quantity) * parseInt(votePrice);
       console.log("nominee, votePrice :>> ", nominee, votePrice);
 
@@ -493,7 +492,7 @@ const eVoteFlowFunc = (
       console.log(userdata);
       other = `${++position},${
         serviceType.EVOTE.name
-      },${nominee}|${votePrice}|${quantity}`;
+      },${nominee},${votePrice},${quantity}`;
           console.log(other);
           
       let refID = randomUUID();
@@ -505,14 +504,14 @@ const eVoteFlowFunc = (
         kuwaita: "malipo",
         refID: `DRM-${refID}-${nominee}`,
       };
-      makePaymentFunc(payload, nominee);
+    //   makePaymentFunc(payload, nominee);
      return res.send(
         formatResponseFunc({
           mode: "END",
           userdata: userdata,
           other: `${++position},${
             serviceType.EVOTE.name
-          },${nominee}|${votePrice}|${quantity}`,
+          },${nominee},${votePrice},${quantity}`,
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
