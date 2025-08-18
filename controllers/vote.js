@@ -84,7 +84,7 @@ router.get("/", (req, res) => {
         return res.send(
           formatResponseFunc({
             mode: "END",
-            userdata: "Error input ll",
+            userdata: "Error input",
             other: "",
             network: network,
             msisdn: msisdn,
@@ -154,7 +154,7 @@ const extractDataFunc = (other) => {
     return {position, serviceType, userInputs1, userInputs2};
   } catch (error) {
     console.log("error :>> ", error);
-    return;
+    return {position: "1", serviceType: "n/a", userInputs1: "", userInputs2: ""};
   }
 };
 
@@ -171,20 +171,20 @@ const eVoteFlowFunc = (
 ) => {
   switch (position) {
     case 1:
-      if (userdata == "00") {
-        return res.send(
-          formatResponseFunc({
-            mode: "MORE",
-            userdata: "Welcome to Doomur Services^1.Votes^2.Tickets",
-            other: `${position},${serviceType.EVOTE.name}`,
-            network: network,
-            msisdn: msisdn,
-            sessionid: sessionid,
-            username: username,
-            trafficid: trafficid,
-          })
-        );
-      }
+    //   if (userdata == "00") {
+    //     return res.send(
+    //       formatResponseFunc({
+    //         mode: "MORE",
+    //         userdata: "Welcome to Doomur Services^1.Votes^2.Tickets",
+    //         other: `${position},${serviceType.EVOTE.name}`,
+    //         network: network,
+    //         msisdn: msisdn,
+    //         sessionid: sessionid,
+    //         username: username,
+    //         trafficid: trafficid,
+    //       })
+    //     );
+    //   }
 
       userdata = "Enter nominee code^00.Back";
       console.log(userdata);
@@ -203,6 +203,23 @@ const eVoteFlowFunc = (
       break;
     case 2:
       let nomimeeCode = userdata;
+      
+      // Validate nominee code input
+      if (!nomimeeCode || nomimeeCode.trim() === "") {
+        return res.send(
+          formatResponseFunc({
+            mode: "END",
+            userdata: "Invalid nominee code. Please try again.",
+            other: "",
+            network: network,
+            msisdn: msisdn,
+            sessionid: sessionid,
+            username: username,
+            trafficid: trafficid,
+          })
+        );
+      }
+      
     //   if (userdata == "00") {
     //     return res.send(
     //       formatResponseFunc({
@@ -222,18 +239,11 @@ const eVoteFlowFunc = (
       let votingPrice = 1;
       userdata = `Vote for John ${nomimeeCode} (1 vote is GHS ${votingPrice}). Enter quantity^00.Back`;
       console.log(userdata);
-      other = `${++position},${
-        serviceType.EVOTE.name
-      },${nomimeeCode},${votingPrice}`;
-      console.log(other);
       return res.send(
         formatResponseFunc({
           mode: "MORE",
           userdata: userdata,
-          other: `${++position},${
-              serviceType.EVOTE.name
-            },${nomimeeCode}|${votingPrice}`,
-        //   other: "3,EVOTE,NOMINEE,1",
+          other: `${++position},${serviceType.EVOTE.name},${nomimeeCode},${votingPrice}`,
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
@@ -245,6 +255,22 @@ const eVoteFlowFunc = (
 
     case 3:
       let quantity = userdata;
+
+      // Validate quantity input
+      if (!quantity || isNaN(parseInt(quantity)) || parseInt(quantity) <= 0) {
+        return res.send(
+          formatResponseFunc({
+            mode: "END",
+            userdata: "Invalid quantity. Please enter a valid number.",
+            other: "",
+            network: network,
+            msisdn: msisdn,
+            sessionid: sessionid,
+            username: username,
+            trafficid: trafficid,
+          })
+        );
+      }
 
       let nominee = extraData.userInputs1;
       let votePrice = extraData.userInputs2;
@@ -303,7 +329,7 @@ const eTicketFlowFunc = (
         formatResponseFunc({
           mode: "END",
           userdata: "No events at the moment",
-          other: `${++position},${serviceType.EVOTE.name}`,
+          other: `${++position},${serviceType.ETICKET.name}`,
           network: network,
           msisdn: msisdn,
           sessionid: sessionid,
@@ -350,11 +376,13 @@ const makePaymentFunc = (payload, nomimeeCode) => {
       } else {
         // console.log('failed to pay')
         var message = `Failed to pay.`;
-        sendSms(msisdn, message);
+        sendSms(payload.msisdn, message);
       }
     })
     .catch((error) => {
-      console.log("aws:3000/payment/nsaon error :>> ", error.message);
+      console.log("aws:3000/payment/nsano error :>> ", error.message);
+      var message = `Payment failed. Please try again.`;
+      // sendSms(payload.msisdn, message);
       return;
     });
 };
