@@ -1,30 +1,18 @@
-ARG NODE_VERSION=20.4.0
+# Use official Node.js LTS image
+FROM node:18-alpine
 
-FROM node:${NODE_VERSION}-alpine
-
-# Use production node environment by default.
-ENV NODE_ENV production
-
-
+# Set working directory
 WORKDIR /app
 
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
 
-RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=package-lock.json,target=package-lock.json \
-    --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev
-
-# Run the application as a non-root user.
-USER node
-
-# COPY package*.json ./
-
-# RUN npm install
-# Copy the rest of the source files into the image.
+# Copy app source code
 COPY . .
 
-# Expose the port that the application listens on.
+# Expose app port (adjust if your app uses a different port)
 EXPOSE 3000
 
-# Run the application.
-CMD node app.js
+# Start the app
+CMD ["npm", "start"]

@@ -20,26 +20,12 @@ var date = oldDate.toISOString().split('T')[0];
 var time = new Date().toLocaleTimeString();  
 
 let EventList = [
-    // {
-    //     show_id: '67',
-    //     event_name: "Elite party - test",
-    //     event_date: '24th Jan',
-    //     event_time: '6:00 PM',
-    //     price: '1'
-    // },
     {
-        show_id: '67',
-        event_name: "Elite party - single",
-        event_date: '24th Jan',
-        event_time: '6:00 PM',
-        price: '80'
-    },
-    {
-        show_id: '67',
-        event_name: "Elite party - double",
-        event_date: '24th Jan',
-        event_time: '6:00 PM',
-        price: '150'
+        show_id: '68',
+        event_name: "Zenithopia",
+        event_date: '4th Oct',
+        event_time: '7:00 PM',
+        price: '35'
     },
 
 ]
@@ -275,6 +261,16 @@ router.get('/vote', (req, res) => {
 })
 
 
+function deductOnePointFivePercent(amount) {
+  // Compute the pre-adjusted value
+  let adjusted = amount / 1.015;
+
+  // Round UP to 2 decimals
+  adjusted = Math.ceil(adjusted * 100) / 100;
+    console.log('deductOnePointFivePercent',amount,'::',adjusted);
+  return adjusted;
+}
+
 // PAUSE ENDPOINT
 router.get('/', (req, res) => {
     
@@ -411,10 +407,11 @@ router.get('/', (req, res) => {
                     let showDate = event_selected.event_date;
                     let showTime = event_selected.event_time; 
 
+                let newAmount = deductOnePointFivePercent(price);
         
                     var payload = {
                         msisdn,
-                        amount: (parseFloat(price) *1).toString(),
+                        amount: newAmount.toString(),
                         mno: network.toUpperCase(),
                         kuwaita:'malipo',
                         refID:`${ticketCode}`
@@ -480,6 +477,8 @@ router.get('/', (req, res) => {
 }
    
 })
+
+
 
 
 module.exports = router;

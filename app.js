@@ -12,7 +12,7 @@ require('dotenv/config');
 const wigal = require('./controllers/wigal');
 // const nsano = require('./controllers/nsano');
 const pprompt = require('./controllers/paymentprompt');
-// const callback = require('./controllers/callback');
+const callback = require('./controllers/callback');
 // const book = require('./controllers/book');
 
 const vote = require('./controllers/vote')
@@ -29,7 +29,7 @@ app.use(cors({
 }));
 
 
-const PORT = process.env.APP_PORT;
+const PORT = process.env.APP_PORT || 3000;
 
 // Cpanel hosted
 // app.use('/payment/', callback)
@@ -37,8 +37,8 @@ const PORT = process.env.APP_PORT;
 
 // AWS hosted
 app.use('/payment/', pprompt) //payment prompt
-// app.use('/', wigal) //USSD
-app.use('/', vote)
+app.use('/', wigal) //USSD
+// app.use('/', vote)
 
 // app.use('/payment/', nsano)
 
