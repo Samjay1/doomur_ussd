@@ -243,7 +243,7 @@ const eVoteFlowFunc = (
       //   }
       // find user by nominee code
       //   get voting price
-      let votingPrice = 0.7;
+      let votingPrice = 1.0;
       axios
         .get(
           `https://api-service.doomur.com/evotes/nominees/code/${nomimeeCode.toUpperCase()}`

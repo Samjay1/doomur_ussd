@@ -69,7 +69,7 @@ router.post('/nsano/og', (req, res) => {
 
     fs.appendFileSync('PayloadLogs.txt', JSON.stringify({payload, date, time}))
         try {
-            axios.post('https://fs1.nsano.com:5001/api/fusion/tp/c146b27dce4d44678b970e77288215fd', payload)
+            axios.post('https://fs1.nsano.com:5001/api/fusion/tp/1f7e805c623d1c58e86f71a8e1d3bfa', payload)
                 .then((data) => {
                     console.log("NSANO API RESPONSE: ",data.data)
                     let response = data.data;

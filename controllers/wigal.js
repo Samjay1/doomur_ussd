@@ -21,13 +21,12 @@ var time = new Date().toLocaleTimeString();
 
 let EventList = [
     {
-        show_id: '68',
-        event_name: "Zenithopia",
-        event_date: '4th Oct',
+        show_id: '69',
+        event_name: "Play n Grove",
+        event_date: '6th Dec',
         event_time: '7:00 PM',
         price: '35'
-    },
-
+    }, 
 ]
 let VoteList = [
     // {
