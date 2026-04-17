@@ -1,0 +1,912 @@
+[
+    {
+        "id": "69d8c893896a6ea8355c21e7",
+        "name": "Tutu Methodist Technical",
+        "nomineeCode": "PNCW",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:53:23.479Z",
+        "updatedAt": "2026-04-10T09:53:23.479Z"
+    },
+    {
+        "id": "69d8c89f896a6ea8355c21f0",
+        "name": "Mampong SHS for Deaf",
+        "nomineeCode": "KLU9",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:53:35.690Z",
+        "updatedAt": "2026-04-10T09:53:35.690Z"
+    },
+    {
+        "id": "69d8c8b1896a6ea8355c21f9",
+        "name": "Okuapeman SHS",
+        "nomineeCode": "BRKD",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:53:53.388Z",
+        "updatedAt": "2026-04-10T09:53:53.388Z"
+    },
+    {
+        "id": "69d8c8c3896a6ea8355c2202",
+        "name": "H’mount Sinai SHS",
+        "nomineeCode": "79VD",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:54:11.187Z",
+        "updatedAt": "2026-04-10T09:54:11.187Z"
+    },
+    {
+        "id": "69d8c8d5896a6ea8355c220b",
+        "name": "Benkum SHS",
+        "nomineeCode": "143Z",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:54:29.697Z",
+        "updatedAt": "2026-04-10T09:54:29.697Z"
+    },
+    {
+        "id": "69d8c8e0896a6ea8355c2214",
+        "name": "Larteh Presbyterian SHTS",
+        "nomineeCode": "7KI5",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:54:40.026Z",
+        "updatedAt": "2026-04-10T09:54:40.026Z"
+    },
+    {
+        "id": "69d8c93a896a6ea8355c221d",
+        "name": "Manya Krobo SHS",
+        "nomineeCode": "TCW5",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:56:10.525Z",
+        "updatedAt": "2026-04-10T09:56:10.525Z"
+    },
+    {
+        "id": "69d8c94c896a6ea8355c2226",
+        "name": "Akro SHTS",
+        "nomineeCode": "J2AQ",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:56:28.957Z",
+        "updatedAt": "2026-04-10T09:56:28.957Z"
+    },
+    {
+        "id": "69d8c95a896a6ea8355c222f",
+        "name": "Akwamuman SHS",
+        "nomineeCode": "WPHL",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:56:42.717Z",
+        "updatedAt": "2026-04-10T09:56:42.717Z"
+    },
+    {
+        "id": "69d8c98e896a6ea8355c2238",
+        "name": "Yilo Krobo SHS",
+        "nomineeCode": "DO3D",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:57:34.805Z",
+        "updatedAt": "2026-04-10T09:57:34.805Z"
+    },
+    {
+        "id": "69d8c9aa896a6ea8355c2241",
+        "name": "Apeguso SHS",
+        "nomineeCode": "DWKW",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:58:02.047Z",
+        "updatedAt": "2026-04-10T09:58:02.047Z"
+    },
+    {
+        "id": "69d8c9b2896a6ea8355c224a",
+        "name": "Dorfor SHS",
+        "nomineeCode": "31Y4",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:58:10.829Z",
+        "updatedAt": "2026-04-10T09:58:10.829Z"
+    },
+    {
+        "id": "69d8c9c9896a6ea8355c2253",
+        "name": "Awudome SHS",
+        "nomineeCode": "6WUA",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:58:33.785Z",
+        "updatedAt": "2026-04-10T09:58:33.785Z"
+    },
+    {
+        "id": "69d8c9ed896a6ea8355c225c",
+        "name": "Anum Technical Institute",
+        "nomineeCode": "B19P",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:59:09.286Z",
+        "updatedAt": "2026-04-10T09:59:09.286Z"
+    },
+    {
+        "id": "69d8c9f8896a6ea8355c2265",
+        "name": "Anum Presec",
+        "nomineeCode": "ETTQ",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:59:20.085Z",
+        "updatedAt": "2026-04-10T09:59:20.085Z"
+    },
+    {
+        "id": "69d8ca00896a6ea8355c226e",
+        "name": "Boso SHS",
+        "nomineeCode": "15PE",
+        "categoryId": {
+            "_id": "69d85729896a6ea8355c21ad",
+            "name": "EASTERN REGION / VOLTA REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T09:59:28.044Z",
+        "updatedAt": "2026-04-10T09:59:28.044Z"
+    },
+    {
+        "id": "69d8ca5c896a6ea8355c2282",
+        "name": "Awutu Bawjiase SHS",
+        "nomineeCode": "1BVI",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:01:00.406Z",
+        "updatedAt": "2026-04-10T10:01:00.406Z"
+    },
+    {
+        "id": "69d8ca68896a6ea8355c228b",
+        "name": "Senya SHS",
+        "nomineeCode": "REXN",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:01:12.225Z",
+        "updatedAt": "2026-04-10T10:01:12.225Z"
+    },
+    {
+        "id": "69d8ca7f896a6ea8355c2294",
+        "name": "Obrachire SHS",
+        "nomineeCode": "UEW1",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:01:35.824Z",
+        "updatedAt": "2026-04-10T10:01:35.824Z"
+    },
+    {
+        "id": "69d8ca92896a6ea8355c229d",
+        "name": "Gomoa SHS",
+        "nomineeCode": "JII9",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:01:54.685Z",
+        "updatedAt": "2026-04-10T10:01:54.685Z"
+    },
+    {
+        "id": "69d8caa3896a6ea8355c22a6",
+        "name": "Mozano SHS",
+        "nomineeCode": "DT17",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:02:11.166Z",
+        "updatedAt": "2026-04-10T10:02:11.166Z"
+    },
+    {
+        "id": "69d8cab1896a6ea8355c22af",
+        "name": "Apam SHS",
+        "nomineeCode": "946D",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:02:25.286Z",
+        "updatedAt": "2026-04-10T10:02:25.286Z"
+    },
+    {
+        "id": "69d8cabd896a6ea8355c22b8",
+        "name": "Swedru SHS",
+        "nomineeCode": "34DP",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:02:37.086Z",
+        "updatedAt": "2026-04-10T10:02:37.086Z"
+    },
+    {
+        "id": "69d8cace896a6ea8355c22c1",
+        "name": "Swedru School of Business",
+        "nomineeCode": "JGCB",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:02:54.176Z",
+        "updatedAt": "2026-04-10T10:02:54.176Z"
+    },
+    {
+        "id": "69d8cb00896a6ea8355c22ca",
+        "name": "Swedru Technical Institute",
+        "nomineeCode": "7K28",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:03:44.085Z",
+        "updatedAt": "2026-04-10T10:03:44.085Z"
+    },
+    {
+        "id": "69d8cb0e896a6ea8355c22d3",
+        "name": "Agona Swedru Technical Institute",
+        "nomineeCode": "KEYY",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:03:58.985Z",
+        "updatedAt": "2026-04-10T10:03:58.985Z"
+    },
+    {
+        "id": "69d8cb1e896a6ea8355c22dc",
+        "name": "Kwanyako SHS",
+        "nomineeCode": "GY44",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:04:14.745Z",
+        "updatedAt": "2026-04-10T10:04:14.745Z"
+    },
+    {
+        "id": "69d8cb28896a6ea8355c22ea",
+        "name": "Odupong SHS",
+        "nomineeCode": "WVGB",
+        "categoryId": {
+            "_id": "69d85742896a6ea8355c21b8",
+            "name": "CENTRAL REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:04:24.624Z",
+        "updatedAt": "2026-04-10T10:04:24.624Z"
+    },
+    {
+        "id": "69d8cb4f896a6ea8355c2303",
+        "name": "Tema Manhean SHS",
+        "nomineeCode": "X96B",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:05:03.197Z",
+        "updatedAt": "2026-04-10T10:05:03.197Z"
+    },
+    {
+        "id": "69d8cb56896a6ea8355c230c",
+        "name": "Tema Mission\nTechnical Institute",
+        "nomineeCode": "PCSZ",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:05:10.517Z",
+        "updatedAt": "2026-04-10T10:05:10.517Z"
+    },
+    {
+        "id": "69d8cbaf896a6ea8355c231a",
+        "name": "Ashaiman SHS",
+        "nomineeCode": "SF9S",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:06:39.845Z",
+        "updatedAt": "2026-04-10T10:06:39.845Z"
+    },
+    {
+        "id": "69d8cbb7896a6ea8355c2323",
+        "name": "Ashiaman Technical Institute",
+        "nomineeCode": "M5ZP",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:06:47.175Z",
+        "updatedAt": "2026-04-10T10:06:47.175Z"
+    },
+    {
+        "id": "69d8cbd4896a6ea8355c232c",
+        "name": "Accra SHS",
+        "nomineeCode": "NXPT",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:07:16.152Z",
+        "updatedAt": "2026-04-10T10:07:16.152Z"
+    },
+    {
+        "id": "69d8cbf4896a6ea8355c2335",
+        "name": "Kinbu SHTS",
+        "nomineeCode": "I349",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:07:48.413Z",
+        "updatedAt": "2026-04-10T10:07:48.413Z"
+    },
+    {
+        "id": "69d8cc00896a6ea8355c233e",
+        "name": "Kanda Technical Institute",
+        "nomineeCode": "P55B",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:08:00.973Z",
+        "updatedAt": "2026-04-10T10:08:00.973Z"
+    },
+    {
+        "id": "69d8cc2a896a6ea8355c234c",
+        "name": "Labone SHS",
+        "nomineeCode": "9G08",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:08:42.545Z",
+        "updatedAt": "2026-04-10T10:08:42.545Z"
+    },
+    {
+        "id": "69d8cc33896a6ea8355c2355",
+        "name": "Presby SHS, Osu",
+        "nomineeCode": "KYHR",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:08:51.293Z",
+        "updatedAt": "2026-04-10T10:08:51.293Z"
+    },
+    {
+        "id": "69d8cc3f896a6ea8355c235e",
+        "name": "Accra Wesley Girls High",
+        "nomineeCode": "2T05",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:09:03.554Z",
+        "updatedAt": "2026-04-10T10:09:03.554Z"
+    },
+    {
+        "id": "69d8cc6b896a6ea8355c2367",
+        "name": "La Presby SHS",
+        "nomineeCode": "0IWW",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:09:47.066Z",
+        "updatedAt": "2026-04-10T10:09:47.066Z"
+    },
+    {
+        "id": "69d8cc7c896a6ea8355c2370",
+        "name": "Nungua SHS",
+        "nomineeCode": "4UOQ",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:10:04.329Z",
+        "updatedAt": "2026-04-10T10:10:04.329Z"
+    },
+    {
+        "id": "69d8cc93896a6ea8355c2379",
+        "name": "O’Reilly SHS",
+        "nomineeCode": "M0FG",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:10:27.537Z",
+        "updatedAt": "2026-04-10T10:10:27.537Z"
+    },
+    {
+        "id": "69d8cca6896a6ea8355c2382",
+        "name": "Tema SHS",
+        "nomineeCode": "668F",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:10:46.556Z",
+        "updatedAt": "2026-04-10T10:10:46.556Z"
+    },
+    {
+        "id": "69d8ccaf896a6ea8355c238b",
+        "name": "Tema Technical Institute",
+        "nomineeCode": "84U4",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:10:55.700Z",
+        "updatedAt": "2026-04-10T10:10:55.700Z"
+    },
+    {
+        "id": "69d8ccc2896a6ea8355c2394",
+        "name": "Presby SHS, Tema",
+        "nomineeCode": "5WD3",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:11:14.986Z",
+        "updatedAt": "2026-04-10T10:11:14.986Z"
+    },
+    {
+        "id": "69d8ccdc896a6ea8355c23a2",
+        "name": "Ebenezer SHS",
+        "nomineeCode": "6EPJ",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:11:40.787Z",
+        "updatedAt": "2026-04-10T10:11:40.787Z"
+    },
+    {
+        "id": "69d8cce6896a6ea8355c23ab",
+        "name": "Armed Forces SHTS",
+        "nomineeCode": "F3XQ",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:11:50.646Z",
+        "updatedAt": "2026-04-10T10:11:50.646Z"
+    },
+    {
+        "id": "69d8ccf8896a6ea8355c23b4",
+        "name": "Chemu SHTS",
+        "nomineeCode": "WLTN",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:12:08.766Z",
+        "updatedAt": "2026-04-10T10:12:08.766Z"
+    },
+    {
+        "id": "69d8cd06896a6ea8355c23bd",
+        "name": "Sacred Heart Technical Institute",
+        "nomineeCode": "MJBH",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:12:22.316Z",
+        "updatedAt": "2026-04-10T10:12:22.316Z"
+    },
+    {
+        "id": "69d8cd21896a6ea8355c23c6",
+        "name": "Nima Technical Institute",
+        "nomineeCode": "XFH4",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:12:49.398Z",
+        "updatedAt": "2026-04-10T10:12:49.398Z"
+    },
+    {
+        "id": "69d8cd2a896a6ea8355c23cf",
+        "name": "Wesley Grammar School",
+        "nomineeCode": "MZWS",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:12:58.683Z",
+        "updatedAt": "2026-04-10T10:12:58.683Z"
+    },
+    {
+        "id": "69d8cd35896a6ea8355c23d8",
+        "name": "Odorgonno SHS",
+        "nomineeCode": "G9A4",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:13:09.966Z",
+        "updatedAt": "2026-04-10T10:13:09.966Z"
+    },
+    {
+        "id": "69d8cd3e896a6ea8355c23e1",
+        "name": "Our Lady of Mercy SHS",
+        "nomineeCode": "YC66",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:13:18.746Z",
+        "updatedAt": "2026-04-10T10:13:18.746Z"
+    },
+    {
+        "id": "69d8cd49896a6ea8355c23ea",
+        "name": "Bortianor SHS",
+        "nomineeCode": "RPZE",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:13:29.299Z",
+        "updatedAt": "2026-04-10T10:13:29.299Z"
+    },
+    {
+        "id": "69d8cd50896a6ea8355c23f3",
+        "name": "Christian Methodist SHS",
+        "nomineeCode": "RJDR",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:13:36.727Z",
+        "updatedAt": "2026-04-10T10:13:36.727Z"
+    },
+    {
+        "id": "69d8cd5b896a6ea8355c23fc",
+        "name": "Adjen Kotoku SHTS",
+        "nomineeCode": "CNCZ",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:13:47.567Z",
+        "updatedAt": "2026-04-10T10:13:47.567Z"
+    },
+    {
+        "id": "69d8cd6e896a6ea8355c240a",
+        "name": "Amasaman SHTS",
+        "nomineeCode": "GB0B",
+        "categoryId": {
+            "_id": "69d85778896a6ea8355c21d1",
+            "name": "GREATER ACCRA"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:14:06.646Z",
+        "updatedAt": "2026-04-10T10:14:06.646Z"
+    },
+    {
+        "id": "69d8cd97896a6ea8355c2429",
+        "name": "Kumasi Girls SHS",
+        "nomineeCode": "06XX",
+        "categoryId": {
+            "_id": "69d8cd87896a6ea8355c241b",
+            "name": "ASHANTI REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:14:47.375Z",
+        "updatedAt": "2026-04-10T12:34:08.216Z"
+    },
+    {
+        "id": "69d8cda0896a6ea8355c2432",
+        "name": "St. Louis Senior High School",
+        "nomineeCode": "AU5Q",
+        "categoryId": {
+            "_id": "69d8cd87896a6ea8355c241b",
+            "name": "ASHANTI REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:14:56.375Z",
+        "updatedAt": "2026-04-10T10:14:56.375Z"
+    },
+    {
+        "id": "69d8cdac896a6ea8355c243b",
+        "name": "Kumasi Wesley Girls SHS",
+        "nomineeCode": "M89E",
+        "categoryId": {
+            "_id": "69d8cd87896a6ea8355c241b",
+            "name": "ASHANTI REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:15:08.574Z",
+        "updatedAt": "2026-04-10T10:15:08.574Z"
+    },
+    {
+        "id": "69d8cdb2896a6ea8355c2444",
+        "name": "KNUST Senior High School",
+        "nomineeCode": "BBA6",
+        "categoryId": {
+            "_id": "69d8cd87896a6ea8355c241b",
+            "name": "ASHANTI REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:15:14.834Z",
+        "updatedAt": "2026-04-10T10:15:14.834Z"
+    },
+    {
+        "id": "69d8cdc9896a6ea8355c244d",
+        "name": "Prince of Peace Girls SHS",
+        "nomineeCode": "GZUJ",
+        "categoryId": {
+            "_id": "69d8cd87896a6ea8355c241b",
+            "name": "ASHANTI REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:15:37.862Z",
+        "updatedAt": "2026-04-10T10:15:37.862Z"
+    },
+    {
+        "id": "69d8cdd5896a6ea8355c245b",
+        "name": "Mancell Girls High School",
+        "nomineeCode": "VXUY",
+        "categoryId": {
+            "_id": "69d8cd87896a6ea8355c241b",
+            "name": "ASHANTI REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:15:49.846Z",
+        "updatedAt": "2026-04-10T10:15:49.846Z"
+    },
+    {
+        "id": "69d8cddc896a6ea8355c2464",
+        "name": "Ejisuman SHS",
+        "nomineeCode": "BAHR",
+        "categoryId": {
+            "_id": "69d8cd87896a6ea8355c241b",
+            "name": "ASHANTI REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:15:56.994Z",
+        "updatedAt": "2026-04-10T10:15:56.994Z"
+    },
+    {
+        "id": "69d8cde7896a6ea8355c246d",
+        "name": "Ejisu SHTS",
+        "nomineeCode": "W2FR",
+        "categoryId": {
+            "_id": "69d8cd87896a6ea8355c241b",
+            "name": "ASHANTI REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:16:07.458Z",
+        "updatedAt": "2026-04-10T10:16:07.458Z"
+    },
+    {
+        "id": "69d8cdee896a6ea8355c2476",
+        "name": "Antoa SHS",
+        "nomineeCode": "YVPE",
+        "categoryId": {
+            "_id": "69d8cd87896a6ea8355c241b",
+            "name": "ASHANTI REGION"
+        },
+        "eventId": "69d855ea896a6ea8355c21a0",
+        "voteAmount": 0,
+        "status": "ACTIVE",
+        "createdAt": "2026-04-10T10:16:14.122Z",
+        "updatedAt": "2026-04-10T10:16:14.122Z"
+    }
+]

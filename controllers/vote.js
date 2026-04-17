@@ -14,6 +14,28 @@ const serviceType = {
   ETICKET: {index: 2, name: "ETICKET"},
 };
 
+/** Replace or load from DB/API — used for USSD ticket purchase list */
+const TICKET_EVENTS = [
+  {id: "72", name: "Play & Groove", price: 1},
+  { id: "73", name: "Doomur Live Accra", price: 25 },
+];
+
+const MAX_USSD_TICKET_OPTIONS = 9;
+
+const sanitizeUssdText = (s) => String(s == null ? "" : s).replace(/\^/g, " ");
+
+const buildTicketEventMenu = () => {
+  const slice = TICKET_EVENTS.slice(0, MAX_USSD_TICKET_OPTIONS);
+  const lines = slice.map(
+    (ev, i) => `${i + 1}.${sanitizeUssdText(ev.name)}`
+  );
+  let more = "";
+  if (TICKET_EVENTS.length > MAX_USSD_TICKET_OPTIONS) {
+    more = `^0.More on doomur.com`;
+  }
+  return `Select event^${lines.join("^")}^00.Back${more}`;
+};
+
 router.get("/", (req, res) => {
   let body = req.query;
 
@@ -365,23 +387,191 @@ const eTicketFlowFunc = (
   trafficid,
   res
 ) => {
-  return res.send(
-    formatResponseFunc({
-      mode: "END",
-      userdata: "No events at the moment",
-      other: `${++position},${serviceType.ETICKET.name}`,
-      network: network,
-      msisdn: msisdn,
-      sessionid: sessionid,
-      username: username,
-      trafficid: trafficid,
-    })
-  );
-  //   switch (position) {
-
-  //     case 1:
-  //       break;
-  //   }
+  switch (position) {
+    case 1:
+      if (TICKET_EVENTS.length === 0) {
+        return res.send(
+          formatResponseFunc({
+            mode: "END",
+            userdata: "No events at the moment",
+            other: "",
+            network,
+            msisdn,
+            sessionid,
+            username,
+            trafficid,
+          })
+        );
+      }
+      return res.send(
+        formatResponseFunc({
+          mode: "MORE",
+          userdata: buildTicketEventMenu(),
+          other: `2,${serviceType.ETICKET.name}`,
+          network,
+          msisdn,
+          sessionid,
+          username,
+          trafficid,
+        })
+      );
+    case 2: {
+      if (userdata === "00") {
+        return res.send(
+          formatResponseFunc({
+            mode: "MORE",
+            userdata: "Welcome to Doomur Services^1.Votes^2.Tickets",
+            other: "1",
+            network,
+            msisdn,
+            sessionid,
+            username,
+            trafficid,
+          })
+        );
+      }
+      const choice = parseInt(userdata, 10);
+      const listed = TICKET_EVENTS.slice(0, MAX_USSD_TICKET_OPTIONS);
+      if (
+        isNaN(choice) ||
+        choice < 1 ||
+        choice > listed.length
+      ) {
+        return res.send(
+          formatResponseFunc({
+            mode: "END",
+            userdata: "Invalid selection. Please try again.",
+            other: "",
+            network,
+            msisdn,
+            sessionid,
+            username,
+            trafficid,
+          })
+        );
+      }
+      const event = listed[choice - 1];
+      const price = Number(event.price);
+      const ticketPrice = isNaN(price) || price <= 0 ? 1 : price;
+      const label = sanitizeUssdText(event.name);
+      return res.send(
+        formatResponseFunc({
+          mode: "MORE",
+          userdata: `Tickets: ${label} (GHS${ticketPrice} each). Enter quantity^00.Back`,
+          other: `3,${serviceType.ETICKET.name},${choice},${ticketPrice}`,
+          network,
+          msisdn,
+          sessionid,
+          username,
+          trafficid,
+        })
+      );
+    }
+    case 3: {
+      if (userdata === "00") {
+        if (TICKET_EVENTS.length === 0) {
+          return res.send(
+            formatResponseFunc({
+              mode: "END",
+              userdata: "No events at the moment",
+              other: "",
+              network,
+              msisdn,
+              sessionid,
+              username,
+              trafficid,
+            })
+          );
+        }
+        return res.send(
+          formatResponseFunc({
+            mode: "MORE",
+            userdata: buildTicketEventMenu(),
+            other: `2,${serviceType.ETICKET.name}`,
+            network,
+            msisdn,
+            sessionid,
+            username,
+            trafficid,
+          })
+        );
+      }
+      const quantity = userdata;
+      if (!quantity || isNaN(parseInt(quantity, 10)) || parseInt(quantity, 10) <= 0) {
+        return res.send(
+          formatResponseFunc({
+            mode: "END",
+            userdata: "Invalid quantity. Please enter a valid number.",
+            other: "",
+            network,
+            msisdn,
+            sessionid,
+            username,
+            trafficid,
+          })
+        );
+      }
+      const choice = parseInt(extraData.userInputs1, 10);
+      const listed = TICKET_EVENTS.slice(0, MAX_USSD_TICKET_OPTIONS);
+      const event = listed[choice - 1];
+      if (!event) {
+        return res.send(
+          formatResponseFunc({
+            mode: "END",
+            userdata: "Session expired. Please dial again.",
+            other: "",
+            network,
+            msisdn,
+            sessionid,
+            username,
+            trafficid,
+          })
+        );
+      }
+      const ticketPrice = parseFloat(extraData.userInputs2);
+      const unit = isNaN(ticketPrice) || ticketPrice <= 0 ? 1 : ticketPrice;
+      const qty = parseInt(quantity, 10);
+      const amount = qty * unit;
+      const refID = uuidv4();
+      const eventName = sanitizeUssdText(event.name);
+      const payload = {
+        msisdn,
+        nomineeName: eventName,
+        amount,
+        sessionid,
+        username,
+        mno: network.toUpperCase(),
+        kuwaita: "malipo",
+        refID: `DRM:${refID}:TICKET:${event.id}`,
+      };
+      makePaymentFunc(payload, event.id, quantity);
+      return res.send(
+        formatResponseFunc({
+          mode: "END",
+          userdata: "Kindly wait for your payment prompt to confirm payment.",
+          other: `4,${serviceType.ETICKET.name},${event.id},${unit},${quantity}`,
+          network,
+          msisdn,
+          sessionid,
+          username,
+          trafficid,
+        })
+      );
+    }
+    default:
+      return res.send(
+        formatResponseFunc({
+          mode: "END",
+          userdata: "Session error. Please dial again.",
+          other: "",
+          network,
+          msisdn,
+          sessionid,
+          username,
+          trafficid,
+        })
+      );
+  }
 };
 
 const makePaymentFunc = (payload, nomimeeCode, quantity) => {

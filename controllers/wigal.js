@@ -20,13 +20,13 @@ var date = oldDate.toISOString().split('T')[0];
 var time = new Date().toLocaleTimeString();  
 
 let EventList = [
-    {
-        show_id: '69',
-        event_name: "Play n Grove",
-        event_date: '6th Dec',
-        event_time: '7:00 PM',
-        price: '35'
-    }, 
+    // {
+    //     show_id: '69',
+    //     event_name: "Play n Grove",
+    //     event_date: '6th Dec',
+    //     event_time: '7:00 PM',
+    //     price: '35'
+    // }, 
 ]
 let VoteList = [
     // {
@@ -415,8 +415,7 @@ router.get('/', (req, res) => {
                         kuwaita:'malipo',
                         refID:`${ticketCode}`
                     }
-                    
-                    
+                     
                     axios.post('http://3.215.156.108:3000/payment/nsano', payload)
                         .then((response) => {
                             console.log('payment/nsano CALLED :>> ', response.data.status);

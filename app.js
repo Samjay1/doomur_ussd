@@ -16,6 +16,7 @@ const callback = require('./controllers/callback');
 // const book = require('./controllers/book');
 
 const vote = require('./controllers/vote')
+const voteOnly = require('./controllers/vote_only')
 
 const app = express();
 
@@ -38,7 +39,8 @@ const PORT = process.env.APP_PORT || 3000;
 // AWS hosted
 app.use('/payment/', pprompt) //payment prompt
 // app.use('/', wigal) //USSD
-app.use('/', vote)
+app.use('/', vote) //Voting with main menu
+// app.use('/', voteOnly) //Voting only
 
 // app.use('/payment/', nsano)
 
