@@ -14,27 +14,63 @@ const serviceType = {
   ETICKET: {index: 2, name: "ETICKET"},
 };
 
-/** Replace or load from DB/API — used for USSD ticket purchase list */
+/**
+ * Same shape as wigal.js EventList: show_id, event_name, event_date, event_time, price
+ * (id / name supported as aliases.)
+ */
 const TICKET_EVENTS = [
-  {id: "72", name: "Play & Groove", price: 1},
-  { id: "73", name: "Doomur Live Accra", price: 25 },
+  {
+    show_id: "72",
+    event_name: "Play & Groove",
+    event_date: "1st May",
+    event_time: "8:00 PM",
+    price: 70,
+  }
 ];
 
 const MAX_USSD_TICKET_OPTIONS = 9;
+const MAX_TICKETS_PER_ORDER = 10;
 
 const sanitizeUssdText = (s) => String(s == null ? "" : s).replace(/\^/g, " ");
 
+const normalizeTicketEvent = (ev) => ({
+  show_id: String(ev.show_id ?? ev.id ?? ""),
+  event_name: sanitizeUssdText(ev.event_name ?? ev.name ?? "Event"),
+  event_date: sanitizeUssdText(ev.event_date ?? ""),
+  event_time: sanitizeUssdText(ev.event_time ?? ""),
+  price: Number(ev.price),
+});
+
+const listedTicketEvents = () =>
+  TICKET_EVENTS.slice(0, MAX_USSD_TICKET_OPTIONS).map(normalizeTicketEvent);
+
+/**
+ * Digit-only MoMo ref: always 1–6 digits (integer 1..999999 as string).
+ * Uniqueness is statistical only; keep codes short for SMS/USSD limits.
+ */
+const generateUniqueNumericTicketCode = () =>
+  String(random.int(1, 999999));
+
 const buildTicketEventMenu = () => {
-  const slice = TICKET_EVENTS.slice(0, MAX_USSD_TICKET_OPTIONS);
-  const lines = slice.map(
-    (ev, i) => `${i + 1}.${sanitizeUssdText(ev.name)}`
-  );
+  const slice = listedTicketEvents();
+  const lines = slice.map((ev, i) => {
+    const datePart = ev.event_date ? ` - ${ev.event_date}` : "";
+    return `${i + 1}.${ev.event_name} (GHS ${ev.price})${datePart}`;
+  });
   let more = "";
   if (TICKET_EVENTS.length > MAX_USSD_TICKET_OPTIONS) {
     more = `^0.More on doomur.com`;
   }
   return `Select event^${lines.join("^")}^00.Back${more}`;
 };
+
+const ticketQuantityPrompt = (event) => {
+  const datePart = event.event_date ? ` - ${event.event_date}` : "";
+  return `${event.event_name} (GHS ${event.price})${datePart}^Enter quantity (1-${MAX_TICKETS_PER_ORDER})^00.Back`;
+};
+
+const ticketConfirmPrompt = (event, qty, lineTotal) =>
+  `Paying GHS ${lineTotal} for ${qty} ticket(s) to ${event.event_name}^1.Proceed^00.Back`;
 
 router.get("/", (req, res) => {
   let body = req.query;
@@ -265,7 +301,7 @@ const eVoteFlowFunc = (
       //   }
       // find user by nominee code
       //   get voting price
-      let votingPrice = 1.0;
+      let votingPrice = 2.0;
       axios
         .get(
           `https://api-service.doomur.com/evotes/nominees/code/${nomimeeCode.toUpperCase()}`
@@ -354,7 +390,7 @@ const eVoteFlowFunc = (
         username,
         mno: network.toUpperCase(),
         kuwaita: "malipo",
-        refID: `DRM:${refID}:${nominee}`,
+        refID: `DRM:${refID}:VOTE:${String(nominee).toUpperCase()}`,
       };
       //   console.log('payload :>> ', payload);
       makePaymentFunc(payload, nominee, quantity);
@@ -387,6 +423,8 @@ const eTicketFlowFunc = (
   trafficid,
   res
 ) => {
+  const listed = listedTicketEvents();
+
   switch (position) {
     case 1:
       if (TICKET_EVENTS.length === 0) {
@@ -431,12 +469,7 @@ const eTicketFlowFunc = (
         );
       }
       const choice = parseInt(userdata, 10);
-      const listed = TICKET_EVENTS.slice(0, MAX_USSD_TICKET_OPTIONS);
-      if (
-        isNaN(choice) ||
-        choice < 1 ||
-        choice > listed.length
-      ) {
+      if (isNaN(choice) || choice < 1 || choice > listed.length) {
         return res.send(
           formatResponseFunc({
             mode: "END",
@@ -451,13 +484,12 @@ const eTicketFlowFunc = (
         );
       }
       const event = listed[choice - 1];
-      const price = Number(event.price);
-      const ticketPrice = isNaN(price) || price <= 0 ? 1 : price;
-      const label = sanitizeUssdText(event.name);
+      const ticketPrice =
+        isNaN(event.price) || event.price <= 0 ? 1 : event.price;
       return res.send(
         formatResponseFunc({
           mode: "MORE",
-          userdata: `Tickets: ${label} (GHS${ticketPrice} each). Enter quantity^00.Back`,
+          userdata: ticketQuantityPrompt(event),
           other: `3,${serviceType.ETICKET.name},${choice},${ticketPrice}`,
           network,
           msisdn,
@@ -468,6 +500,11 @@ const eTicketFlowFunc = (
       );
     }
     case 3: {
+      const choice = parseInt(extraData.userInputs1, 10);
+      const ticketPrice = parseFloat(extraData.userInputs2);
+      const unit = isNaN(ticketPrice) || ticketPrice <= 0 ? 1 : ticketPrice;
+      const event = listed[choice - 1];
+
       if (userdata === "00") {
         if (TICKET_EVENTS.length === 0) {
           return res.send(
@@ -496,24 +533,7 @@ const eTicketFlowFunc = (
           })
         );
       }
-      const quantity = userdata;
-      if (!quantity || isNaN(parseInt(quantity, 10)) || parseInt(quantity, 10) <= 0) {
-        return res.send(
-          formatResponseFunc({
-            mode: "END",
-            userdata: "Invalid quantity. Please enter a valid number.",
-            other: "",
-            network,
-            msisdn,
-            sessionid,
-            username,
-            trafficid,
-          })
-        );
-      }
-      const choice = parseInt(extraData.userInputs1, 10);
-      const listed = TICKET_EVENTS.slice(0, MAX_USSD_TICKET_OPTIONS);
-      const event = listed[choice - 1];
+
       if (!event) {
         return res.send(
           formatResponseFunc({
@@ -528,28 +548,135 @@ const eTicketFlowFunc = (
           })
         );
       }
-      const ticketPrice = parseFloat(extraData.userInputs2);
-      const unit = isNaN(ticketPrice) || ticketPrice <= 0 ? 1 : ticketPrice;
-      const qty = parseInt(quantity, 10);
-      const amount = qty * unit;
-      const refID = uuidv4();
-      const eventName = sanitizeUssdText(event.name);
+
+      const qtyRaw = userdata;
+      const qty = parseInt(qtyRaw, 10);
+      if (
+        isNaN(qty) ||
+        qty < 1 ||
+        qty > MAX_TICKETS_PER_ORDER
+      ) {
+        return res.send(
+          formatResponseFunc({
+            mode: "MORE",
+            userdata: `Quantity must be 1-${MAX_TICKETS_PER_ORDER}.^00.Back`,
+            other: `3,${serviceType.ETICKET.name},${choice},${unit}`,
+            network,
+            msisdn,
+            sessionid,
+            username,
+            trafficid,
+          })
+        );
+      }
+
+      const lineTotal = Math.round(qty * unit * 100) / 100;
+      return res.send(
+        formatResponseFunc({
+          mode: "MORE",
+          userdata: ticketConfirmPrompt(event, qty, lineTotal),
+          other: `4,${serviceType.ETICKET.name},${choice},${qty}`,
+          network,
+          msisdn,
+          sessionid,
+          username,
+          trafficid,
+        })
+      );
+    }
+    case 4: {
+      const choice = parseInt(extraData.userInputs1, 10);
+      const qty = parseInt(extraData.userInputs2, 10);
+      const event = listed[choice - 1];
+
+      if (userdata === "00") {
+        if (!event || isNaN(qty) || qty < 1) {
+          return res.send(
+            formatResponseFunc({
+              mode: "MORE",
+              userdata: buildTicketEventMenu(),
+              other: `2,${serviceType.ETICKET.name}`,
+              network,
+              msisdn,
+              sessionid,
+              username,
+              trafficid,
+            })
+          );
+        }
+        const unit =
+          isNaN(event.price) || event.price <= 0 ? 1 : event.price;
+        return res.send(
+          formatResponseFunc({
+            mode: "MORE",
+            userdata: ticketQuantityPrompt(event),
+            other: `3,${serviceType.ETICKET.name},${choice},${unit}`,
+            network,
+            msisdn,
+            sessionid,
+            username,
+            trafficid,
+          })
+        );
+      }
+
+      if (userdata !== "1" || !event || isNaN(qty) || qty < 1) {
+        return res.send(
+          formatResponseFunc({
+            mode: "END",
+            userdata: "Invalid input. Please dial again.",
+            other: "",
+            network,
+            msisdn,
+            sessionid,
+            username,
+            trafficid,
+          })
+        );
+      }
+
+      const unit = isNaN(event.price) || event.price <= 0 ? 1 : event.price;
+      const lineTotal = Math.round(qty * unit * 100) / 100;
+      const ticketCode = generateUniqueNumericTicketCode();
+      const ticketRefUuid = uuidv4();
       const payload = {
         msisdn,
-        nomineeName: eventName,
-        amount,
+        nomineeName: event.event_name,
+        amount: String(lineTotal),
         sessionid,
         username,
         mno: network.toUpperCase(),
         kuwaita: "malipo",
-        refID: `DRM:${refID}:TICKET:${event.id}`,
+        refID: `DRM:${ticketRefUuid}:TICKET:${ticketCode}`,
       };
-      makePaymentFunc(payload, event.id, quantity);
+
+      const bookPayload = {
+        eventId: event.show_id,
+        ticketCode,
+        showName: event.event_name,
+        itemPrice: String(unit),
+        quantity: String(qty),
+        showDate: event.event_date,
+        showTime: event.event_time,
+        msisdn,
+      };
+
+      makeTicketPaymentFunc(
+        payload,
+        bookPayload,
+        network,
+        msisdn,
+        sessionid,
+        username,
+        trafficid,
+        userdata
+      );
+
       return res.send(
         formatResponseFunc({
           mode: "END",
-          userdata: "Kindly wait for your payment prompt to confirm payment.",
-          other: `4,${serviceType.ETICKET.name},${event.id},${unit},${quantity}`,
+          userdata: "Please wait for your payment prompt",
+          other: `5,${serviceType.ETICKET.name},${event.show_id},${unit},${qty}`,
           network,
           msisdn,
           sessionid,
@@ -587,6 +714,51 @@ const makePaymentFunc = (payload, nomimeeCode, quantity) => {
       // sendSms(payload.msisdn, message);
       return;
     });
+};
+
+/** Ticket MoMo + book show (same pattern as wigal.js `/` ticket branch). */
+const makeTicketPaymentFunc = (
+  payload,
+  bookPayload,
+  network,
+  msisdn,
+  sessionid,
+  username,
+  trafficid,
+  lastUserdata
+) => {
+  const logDate = new Date().toISOString().split("T")[0];
+  const logTime = new Date().toLocaleTimeString();
+  axios
+    .post("http://3.215.156.108:3000/payment/nsano", payload)
+    .then((response) => {
+      const status = response.data && response.data.status;
+      console.log("ticket payment/nsano CALLED :>> ", status);
+      if (status) {
+        axios
+          .post("https://ussd.doomur.com/book", bookPayload)
+          .then((bookRes) => {
+            console.log("BOOKING CALLED :>> ", bookRes.data);
+          })
+          .catch((error) => {
+            console.log("https://ussd.doomur.com/book error :>> ", error.message);
+          });
+      } else {
+        sendSms(msisdn, "Failed to pay.");
+      }
+    })
+    .catch((error) => {
+      console.log("ticket payment/nsano error :>> ", error);
+    });
+
+  try {
+    fs.appendFileSync(
+      "finalUssdResponse.txt",
+      `Network:${network}, phone no.:${msisdn}, Session:${sessionid}, Userdata:${lastUserdata}, Username:${username}, TrafficID:${trafficid}, Others:ticket,ref:${payload.refID}, {${logDate},${logTime}}\n`
+    );
+  } catch (e) {
+    console.log("finalUssdResponse log error", e);
+  }
 };
 
 const oldDate = new Date()

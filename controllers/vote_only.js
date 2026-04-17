@@ -280,7 +280,7 @@ const eVoteOnlyFlowFunc = (
         username,
         mno: network.toUpperCase(),
         kuwaita: "malipo",
-        refID: `DRM:${refID}:${nominee}`,
+        refID: `DRM:${refID}:VOTE:${String(nominee).toUpperCase()}`,
       };
 
       makePaymentFunc(payload, nominee, quantity);

@@ -38,6 +38,8 @@ const PORT = process.env.APP_PORT || 3000;
 
 // AWS hosted
 app.use('/payment/', pprompt) //payment prompt
+// Callback routes (POST /ticket-voter-callback, etc.) before vote so paths are not shadowed
+app.use(callback)
 // app.use('/', wigal) //USSD
 app.use('/', vote) //Voting with main menu
 // app.use('/', voteOnly) //Voting only
