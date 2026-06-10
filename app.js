@@ -41,8 +41,8 @@ app.use('/payment/', pprompt) //payment prompt
 // Callback routes (POST /ticket-voter-callback, etc.) before vote so paths are not shadowed
 app.use(callback)
 // app.use('/', wigal) //USSD
-app.use('/', vote) //Voting with main menu
-// app.use('/', voteOnly) //Voting only
+// app.use('/', vote) //Voting with main menu
+app.use('/', voteOnly) //Voting only
 
 // app.use('/payment/', nsano)
 
