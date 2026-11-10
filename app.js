@@ -9,15 +9,16 @@ const axios = require('axios');
 // const mysqlStore = require('express-mysql-session')(session);
 require('dotenv/config');
 // const ussd = require('./controllers/ussd');
-const wigal = require('./controllers/wigal');
+// const wigal = require('./controllers/wigal');
 // const nsano = require('./controllers/nsano');
 const pprompt = require('./controllers/paymentprompt');
 // const callback = require('./controllers/callback');
 // const book = require('./controllers/book');
 
-// const vote = require('./controllers/vote')
+// const general = require('./controllers/ussd/general')
 // const voteOnly = require('./controllers/vote_only')
-const voter2Version = require('./controllers/voter_2_version')
+// const voter2Version = require('./controllers/ussd/voter_2_version')
+const eventUssd = require('./controllers/ussd/event')
 
 const app = express();
 
@@ -39,11 +40,12 @@ const PORT = process.env.APP_PORT || 3000;
 
 // AWS hosted
 app.use('/payment/', pprompt) //payment prompt
-// Callback routes (POST /ticket-voter-callback, etc.) before vote so paths are not shadowed
+// Callback routes (POST /ticket-voter-callback, etc.) before USSD so paths are not shadowed
 // app.use(callback)
 // app.use('/', wigal) //USSD
-// app.use('/', vote) //Voting with main menu
-app.use('/', voter2Version) //Voting only
+// app.use('/', general) // Evotes + events (main menu)
+// app.use('/', voter2Version) // Voting only (V2)
+app.use('/', eventUssd) // Events / tickets only
 
 // app.use('/payment/', nsano)
 

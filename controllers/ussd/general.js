@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const random = require("random");
 const fs = require("fs");
 const axios = require('axios');
-const sendSms = require("./sms");
+const sendSms = require("../sms");
 const {v4: uuidv4} = require("uuid");
 require("dotenv/config");
 
@@ -72,26 +72,76 @@ const ticketQuantityPrompt = (event) => {
 const ticketConfirmPrompt = (event, qty, lineTotal) =>
   `Paying GHS ${lineTotal} for ${qty} ticket(s) to ${event.event_name}^1.Proceed^00.Back`;
 
-router.get("/", (req, res) => {
-  let body = req.query;
+const sendUssdResponse = (res, {
+  mode,
+  userdata,
+  other,
+  network,
+  msisdn,
+  sessionid,
+  username,
+  trafficid,
+  phonenumber,
+}) => {
+  const phone = msisdn ?? phonenumber ?? "";
+  const otherOut = other ?? "";
+  if (res.locals.ussdFormat === "v2") {
+    return res.json({
+      network,
+      sessionid,
+      mode,
+      phonenumber: phone,
+      userdata,
+      username,
+      trafficid,
+      other: otherOut,
+    });
+  }
+  return res.send(
+    `${network}|${mode}|${phone}|${sessionid}|${userdata}|${username}|${trafficid}|${otherOut}`
+  );
+};
 
-  let userdata = body.userdata; // user inputs
-  var network = body.network; // Network eg. MTN
-  var sessionid = body.sessionid; // Session ID
-  var mode = body.mode.toString().toUpperCase(); // START | MORE | END
-  var msisdn = body.msisdn; // Phone of the user
-  var username = body.username; // App Username
-  var trafficid = body.trafficid;
-  var other = body.other;
+const handleVoteUssd = (body, res, ussdFormat) => {
+  res.locals.ussdFormat = ussdFormat;
+
+  let userdata = body.userdata;
+  const network = body.network;
+  const sessionid = body.sessionid;
+  const mode = String(body.mode || "")
+    .toUpperCase()
+    .trim();
+  const msisdn = body.msisdn ?? body.phonenumber;
+  const username = body.username;
+  const trafficid = body.trafficid;
+  const other = body.other ?? "";
 
   console.log("body :>> ", body);
+
+  if (!mode) {
+    if (ussdFormat === "v2") {
+      return res.status(400).json({
+        status: false,
+        message: "Missing required field: mode",
+      });
+    }
+    return sendUssdResponse(res, {
+      mode: "END",
+      userdata: "Invalid request.",
+      other: "",
+      network,
+      msisdn,
+      sessionid,
+      username,
+      trafficid,
+    });
+  }
 
   try {
     console.log("mode :>> ", mode);
     if (mode == "START") {
       userdata = "Welcome to Doomur Services^1.Votes^2.Tickets";
-      return res.send(
-        formatResponseFunc({
+      return sendUssdResponse(res, {
           mode: "MORE",
           userdata: userdata,
           other: "1",
@@ -100,8 +150,7 @@ router.get("/", (req, res) => {
           sessionid: sessionid,
           username: username,
           trafficid: trafficid,
-        })
-      );
+      });
     }
     if (mode == "MORE") {
       let extracData = extractDataFunc(other);
@@ -139,8 +188,7 @@ router.get("/", (req, res) => {
           res
         );
       } else {
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "END",
             userdata: "Error input",
             other: "",
@@ -149,14 +197,12 @@ router.get("/", (req, res) => {
             sessionid: sessionid,
             username: username,
             trafficid: trafficid,
-          })
-        );
+        });
       }
     } else {
       console.log("END CALLED");
       userdata = "Invalid Input, Please try again";
-      return res.send(
-        formatResponseFunc({
+      return sendUssdResponse(res, {
           mode: "END",
           userdata: userdata,
           other: "",
@@ -165,45 +211,30 @@ router.get("/", (req, res) => {
           sessionid: sessionid,
           username: username,
           trafficid: trafficid,
-        })
-      );
+      });
     }
   } catch (error) {
     console.log("catch error CALLED", error);
     userdata = "Something went wrong, Please try again";
-    return res.send(
-      formatResponseFunc({
-        mode: "END",
-        userdata: userdata,
-        other: "",
-        network: network,
-        msisdn: msisdn,
-        sessionid: sessionid,
-        username: username,
-        trafficid: trafficid,
-      })
-
-      //   `${network}|END|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}`
-    );
+    return sendUssdResponse(res, {
+      mode: "END",
+      userdata: userdata,
+      other: "",
+      network: network,
+      msisdn: msisdn,
+      sessionid: sessionid,
+      username: username,
+      trafficid: trafficid,
+    });
   }
-});
-
-const formatResponseFunc = ({
-  mode,
-  userdata,
-  other,
-  network,
-  msisdn,
-  sessionid,
-  username,
-  trafficid,
-}) => {
-  return `${network}|${mode}|${msisdn}|${sessionid}|${userdata}|${username}|${trafficid}|${other}`;
 };
+
+router.get("/", (req, res) => handleVoteUssd(req.query, res, "v1"));
+router.post("/", (req, res) => handleVoteUssd(req.body || {}, res, "v2"));
 
 const extractDataFunc = (other) => {
   try {
-    const otherData = other.split(",");
+    const otherData = String(other || "").split(",");
     const position = otherData[0];
     const serviceType = otherData.length > 1 ? otherData[1] : "n/a";
     const userInputs1 = otherData.length > 2 ? otherData[2] : "";
@@ -253,8 +284,7 @@ const eVoteFlowFunc = (
 
       userdata = "Enter nominee code^00.Back";
       console.log(userdata);
-      return res.send(
-        formatResponseFunc({
+      return sendUssdResponse(res, {
           mode: "MORE",
           userdata: userdata,
           other: `${++position},${serviceType.EVOTE.name}`,
@@ -263,16 +293,14 @@ const eVoteFlowFunc = (
           sessionid: sessionid,
           username: username,
           trafficid: trafficid,
-        })
-      );
+      });
       break;
     case 2:
       let nomimeeCode = userdata;
 
       // Validate nominee code input
       if (!nomimeeCode || nomimeeCode.trim() === "") {
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "END",
             userdata: "Invalid nominee code. Please try again.",
             other: "",
@@ -281,8 +309,7 @@ const eVoteFlowFunc = (
             sessionid: sessionid,
             username: username,
             trafficid: trafficid,
-          })
-        );
+        });
       }
 
       //   if (userdata == "00") {
@@ -316,8 +343,7 @@ const eVoteFlowFunc = (
           }
 
           console.log(userdata);
-          return res.send(
-            formatResponseFunc({
+          return sendUssdResponse(res, {
               mode: "MORE",
               userdata: userdata,
               other: `${++position},${
@@ -328,13 +354,11 @@ const eVoteFlowFunc = (
               sessionid: sessionid,
               username: username,
               trafficid: trafficid,
-            })
-          );
+          });
         })
         .catch((error) => {
           console.log("NOMINEE CALL ERROR:>> ", error.message);
-          return res.send(
-            formatResponseFunc({
+          return sendUssdResponse(res, {
               mode: "MORE",
               userdata: "Invalid nominee code. Please try again.^00.Back",
               other: "",
@@ -343,8 +367,7 @@ const eVoteFlowFunc = (
               sessionid: sessionid,
               username: username,
               trafficid: trafficid,
-            })
-          );
+          });
         });
       break;
 
@@ -353,8 +376,7 @@ const eVoteFlowFunc = (
 
       // Validate quantity input
       if (!quantity || isNaN(parseInt(quantity)) || parseInt(quantity) <= 0) {
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "END",
             userdata: "Invalid quantity. Please enter a valid number.",
             other: "",
@@ -363,8 +385,7 @@ const eVoteFlowFunc = (
             sessionid: sessionid,
             username: username,
             trafficid: trafficid,
-          })
-        );
+        });
       }
 
       let nominee = extraData.userInputs1;
@@ -394,8 +415,7 @@ const eVoteFlowFunc = (
       };
       //   console.log('payload :>> ', payload);
       makePaymentFunc(payload, nominee, quantity);
-      return res.send(
-        formatResponseFunc({
+      return sendUssdResponse(res, {
           mode: "END",
           userdata: userdata,
           other: `${++position},${
@@ -406,8 +426,7 @@ const eVoteFlowFunc = (
           sessionid: sessionid,
           username: username,
           trafficid: trafficid,
-        })
-      );
+      });
       break;
   }
 };
@@ -428,8 +447,7 @@ const eTicketFlowFunc = (
   switch (position) {
     case 1:
       if (TICKET_EVENTS.length === 0) {
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "END",
             userdata: "No events at the moment",
             other: "",
@@ -438,11 +456,9 @@ const eTicketFlowFunc = (
             sessionid,
             username,
             trafficid,
-          })
-        );
+        });
       }
-      return res.send(
-        formatResponseFunc({
+      return sendUssdResponse(res, {
           mode: "MORE",
           userdata: buildTicketEventMenu(),
           other: `2,${serviceType.ETICKET.name}`,
@@ -451,12 +467,10 @@ const eTicketFlowFunc = (
           sessionid,
           username,
           trafficid,
-        })
-      );
+      });
     case 2: {
       if (userdata === "00") {
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "MORE",
             userdata: "Welcome to Doomur Services^1.Votes^2.Tickets",
             other: "1",
@@ -465,13 +479,11 @@ const eTicketFlowFunc = (
             sessionid,
             username,
             trafficid,
-          })
-        );
+        });
       }
       const choice = parseInt(userdata, 10);
       if (isNaN(choice) || choice < 1 || choice > listed.length) {
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "END",
             userdata: "Invalid selection. Please try again.",
             other: "",
@@ -480,14 +492,12 @@ const eTicketFlowFunc = (
             sessionid,
             username,
             trafficid,
-          })
-        );
+        });
       }
       const event = listed[choice - 1];
       const ticketPrice =
         isNaN(event.price) || event.price <= 0 ? 1 : event.price;
-      return res.send(
-        formatResponseFunc({
+      return sendUssdResponse(res, {
           mode: "MORE",
           userdata: ticketQuantityPrompt(event),
           other: `3,${serviceType.ETICKET.name},${choice},${ticketPrice}`,
@@ -496,8 +506,7 @@ const eTicketFlowFunc = (
           sessionid,
           username,
           trafficid,
-        })
-      );
+      });
     }
     case 3: {
       const choice = parseInt(extraData.userInputs1, 10);
@@ -507,8 +516,7 @@ const eTicketFlowFunc = (
 
       if (userdata === "00") {
         if (TICKET_EVENTS.length === 0) {
-          return res.send(
-            formatResponseFunc({
+          return sendUssdResponse(res, {
               mode: "END",
               userdata: "No events at the moment",
               other: "",
@@ -517,11 +525,9 @@ const eTicketFlowFunc = (
               sessionid,
               username,
               trafficid,
-            })
-          );
+          });
         }
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "MORE",
             userdata: buildTicketEventMenu(),
             other: `2,${serviceType.ETICKET.name}`,
@@ -530,13 +536,11 @@ const eTicketFlowFunc = (
             sessionid,
             username,
             trafficid,
-          })
-        );
+        });
       }
 
       if (!event) {
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "END",
             userdata: "Session expired. Please dial again.",
             other: "",
@@ -545,8 +549,7 @@ const eTicketFlowFunc = (
             sessionid,
             username,
             trafficid,
-          })
-        );
+        });
       }
 
       const qtyRaw = userdata;
@@ -556,8 +559,7 @@ const eTicketFlowFunc = (
         qty < 1 ||
         qty > MAX_TICKETS_PER_ORDER
       ) {
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "MORE",
             userdata: `Quantity must be 1-${MAX_TICKETS_PER_ORDER}.^00.Back`,
             other: `3,${serviceType.ETICKET.name},${choice},${unit}`,
@@ -566,13 +568,11 @@ const eTicketFlowFunc = (
             sessionid,
             username,
             trafficid,
-          })
-        );
+        });
       }
 
       const lineTotal = Math.round(qty * unit * 100) / 100;
-      return res.send(
-        formatResponseFunc({
+      return sendUssdResponse(res, {
           mode: "MORE",
           userdata: ticketConfirmPrompt(event, qty, lineTotal),
           other: `4,${serviceType.ETICKET.name},${choice},${qty}`,
@@ -581,8 +581,7 @@ const eTicketFlowFunc = (
           sessionid,
           username,
           trafficid,
-        })
-      );
+      });
     }
     case 4: {
       const choice = parseInt(extraData.userInputs1, 10);
@@ -591,8 +590,7 @@ const eTicketFlowFunc = (
 
       if (userdata === "00") {
         if (!event || isNaN(qty) || qty < 1) {
-          return res.send(
-            formatResponseFunc({
+          return sendUssdResponse(res, {
               mode: "MORE",
               userdata: buildTicketEventMenu(),
               other: `2,${serviceType.ETICKET.name}`,
@@ -601,13 +599,11 @@ const eTicketFlowFunc = (
               sessionid,
               username,
               trafficid,
-            })
-          );
+          });
         }
         const unit =
           isNaN(event.price) || event.price <= 0 ? 1 : event.price;
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "MORE",
             userdata: ticketQuantityPrompt(event),
             other: `3,${serviceType.ETICKET.name},${choice},${unit}`,
@@ -616,13 +612,11 @@ const eTicketFlowFunc = (
             sessionid,
             username,
             trafficid,
-          })
-        );
+        });
       }
 
       if (userdata !== "1" || !event || isNaN(qty) || qty < 1) {
-        return res.send(
-          formatResponseFunc({
+        return sendUssdResponse(res, {
             mode: "END",
             userdata: "Invalid input. Please dial again.",
             other: "",
@@ -631,8 +625,7 @@ const eTicketFlowFunc = (
             sessionid,
             username,
             trafficid,
-          })
-        );
+        });
       }
 
       const unit = isNaN(event.price) || event.price <= 0 ? 1 : event.price;
@@ -672,8 +665,7 @@ const eTicketFlowFunc = (
         userdata
       );
 
-      return res.send(
-        formatResponseFunc({
+      return sendUssdResponse(res, {
           mode: "END",
           userdata: "Please wait for your payment prompt",
           other: `5,${serviceType.ETICKET.name},${event.show_id},${unit},${qty}`,
@@ -682,12 +674,10 @@ const eTicketFlowFunc = (
           sessionid,
           username,
           trafficid,
-        })
-      );
+      });
     }
     default:
-      return res.send(
-        formatResponseFunc({
+      return sendUssdResponse(res, {
           mode: "END",
           userdata: "Session error. Please dial again.",
           other: "",
@@ -696,8 +686,7 @@ const eTicketFlowFunc = (
           sessionid,
           username,
           trafficid,
-        })
-      );
+      });
   }
 };
 

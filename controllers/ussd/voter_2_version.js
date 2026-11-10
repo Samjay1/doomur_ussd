@@ -108,8 +108,7 @@ const formatJsonResponse = ({
   mode,
   phonenumber,
   userdata,
-  username:'samjay',
-  // username,
+  username,
   trafficid,
   other: other ?? "",
 });

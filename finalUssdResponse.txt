@@ -1,1 +1,1 @@
-Network:MTN, phone no.:0547785025, Session:awsTrial, Userdata:Please wait for your payment prompt, Username:Doomur, TrafficID:aws324567543, Others:4,event,0,2
+Network:MTN, phone no.:0547785025, Session:awsTrial, Userdata:Please wait for your payment prompt, Username:Doomur, TrafficID:aws324567543, Others:4,event,0,2Network:MTN, phone no.:233200000001, Session:test-sess-1, Userdata:1, Username:test, TrafficID:5, Others:ticket,ref:DRM:6a88786f-9579-49fc-a3a0-ce500b0b1293:TICKET:373729, {2026-11-10,7:27:30 PM}

@@ -9,7 +9,7 @@ const Showdb = require('../models/showdb')
 let DB = new Showdb();
 
 /**
- * author_ref from payment (aligned with controllers/vote.js):
+ * author_ref from payment (aligned with controllers/ussd/general.js):
  * - Vote (current): DRM:<uuid>:VOTE:<nomineeCode>
  * - Vote (legacy): DRM:<uuid>:<nomineeCode> (3 segments only)
  * - Ticket (current): DRM:<uuid>:TICKET:<ticketCode> (ticketCode 1–6 digits)
@@ -88,7 +88,7 @@ const sendTicketPaymentSms = (phone, ticketCode, amount, transactionID, parsed) 
   sendSms(phone, message);
 };
 
-/** Ticket path: payments DB + SMS (matches vote.js numeric / legacy DRM:TICKET refs). */
+/** Ticket path: payments DB + SMS (matches general.js numeric / legacy DRM:TICKET refs). */
 const processTicketPaymentSuccess = (body, parsed, authorRef) => {
   const ticketCode = parsed.ticketCode || authorRef || parsed.authorRef;
   const transactionID = body.transactionID;
