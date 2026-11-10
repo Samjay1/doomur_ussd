@@ -20,9 +20,9 @@ const serviceType = {
  */
 const TICKET_EVENTS = [
   {
-    show_id: "72",
+    show_id: "75",
     event_name: "Play & Groove",
-    event_date: "1st May",
+    event_date: "5th Dec",
     event_time: "8:00 PM",
     price: 70,
   }

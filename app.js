@@ -15,8 +15,9 @@ const pprompt = require('./controllers/paymentprompt');
 // const callback = require('./controllers/callback');
 // const book = require('./controllers/book');
 
-const vote = require('./controllers/vote')
-const voteOnly = require('./controllers/vote_only')
+// const vote = require('./controllers/vote')
+// const voteOnly = require('./controllers/vote_only')
+const voter2Version = require('./controllers/voter_2_version')
 
 const app = express();
 
@@ -42,7 +43,7 @@ app.use('/payment/', pprompt) //payment prompt
 // app.use(callback)
 // app.use('/', wigal) //USSD
 // app.use('/', vote) //Voting with main menu
-app.use('/', voteOnly) //Voting only
+app.use('/', voter2Version) //Voting only
 
 // app.use('/payment/', nsano)
 
